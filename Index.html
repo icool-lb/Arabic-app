@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>لغتي العربية - الصف الخامس</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#C9A84C; --gold-light:#F0D080; --gold-dark:#8B6914;
+  --teal:#0D7377; --teal-light:#14A085; --teal-dark:#085255;
+  --cream:#FDF6E3; --deep:#0A1628; --deep2:#112240;
+  --red:#E74C3C; --green:#27AE60; --purple:#8E44AD;
+  --orange:#E67E22; --blue:#2980B9;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--deep);color:#fff;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(13,115,119,.2) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(201,168,76,.15) 0%,transparent 50%);z-index:0;pointer-events:none;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23C9A84C' fill-opacity='0.04'%3E%3Cpath d='M30 0l30 30-30 30L0 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");z-index:0;pointer-events:none;}
+.app{position:relative;z-index:1;max-width:430px;margin:0 auto;min-height:100vh;}
+.screen{display:none;flex-direction:column;min-height:100vh;}
+.screen.active{display:flex;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* HOME */
+#homeScreen{background:linear-gradient(160deg,var(--deep) 0%,var(--deep2) 50%,var(--teal-dark) 100%);align-items:center;justify-content:flex-start;padding:40px 20px 30px;text-align:center;}
+.logo-circle{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--gold));display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 0 40px rgba(201,168,76,.4);font-size:48px;animation:pulse-glow 3s infinite;position:relative;}
+.logo-circle::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--gold);opacity:.4;animation:rotate-ring 8s linear infinite;}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 40px rgba(201,168,76,.4)}50%{box-shadow:0 0 60px rgba(201,168,76,.7)}}
+@keyframes rotate-ring{to{transform:rotate(360deg) scale(1.1)}}
+.app-title{font-family:'Amiri',serif;font-size:34px;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
+.app-subtitle{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:4px;}
+.app-grade{display:inline-block;background:linear-gradient(135deg,var(--teal),var(--teal-light));padding:5px 18px;border-radius:20px;font-size:13px;font-weight:700;color:#fff;margin-bottom:24px;box-shadow:0 4px 15px rgba(13,115,119,.4);}
+.progress-ring-wrap{position:relative;width:160px;height:160px;margin:0 auto 20px;}
+.progress-ring-wrap svg{transform:rotate(-90deg);}
+.progress-ring-bg{fill:none;stroke:rgba(255,255,255,.1);stroke-width:8;}
+.progress-ring-fill{fill:none;stroke:url(#goldGrad);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1s ease;}
+.progress-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.progress-day-num{font-size:36px;font-weight:900;color:var(--gold-light);line-height:1;}
+.progress-day-label{font-size:12px;color:rgba(255,255,255,.5);}
+.progress-total{font-size:11px;color:var(--gold);margin-top:3px;}
+.stats-row{display:flex;gap:10px;margin-bottom:20px;width:100%;}
+.stat-card{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.2);border-radius:14px;padding:12px 8px;text-align:center;}
+.stat-icon{font-size:20px;margin-bottom:3px;}
+.stat-val{font-size:20px;font-weight:900;color:var(--gold-light);}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,.45);}
+.btn-start{width:100%;padding:16px;border-radius:16px;border:none;background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));color:var(--deep);font-size:18px;font-weight:900;font-family:'Cairo',sans-serif;cursor:pointer;box-shadow:0 8px 25px rgba(201,168,76,.5);transition:all .3s;margin-bottom:10px;}
+.btn-start:active{transform:scale(.97);}
+.btn-secondary{width:100%;padding:13px;border-radius:14px;border:1px solid rgba(201,168,76,.3);background:transparent;color:var(--gold-light);font-size:15px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;margin-bottom:8px;}
+
+/* TOPBAR */
+.topbar{background:rgba(10,22,40,.95);border-bottom:1px solid rgba(201,168,76,.15);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+.topbar-title{font-size:15px;font-weight:700;color:var(--gold-light);font-family:'Amiri',serif;}
+.topbar-back{background:rgba(255,255,255,.1);border:none;color:#fff;padding:7px 12px;border-radius:10px;font-size:12px;font-family:'Cairo',sans-serif;cursor:pointer;}
+.day-badge{background:linear-gradient(135deg,var(--teal),var(--teal-light));padding:5px 12px;border-radius:10px;font-size:12px;font-weight:700;color:#fff;}
+
+/* DAY SCREEN */
+#dayScreen{background:var(--deep);padding-bottom:30px;}
+.day-hero{background:linear-gradient(135deg,var(--teal-dark),var(--deep2));padding:22px 18px;position:relative;overflow:hidden;}
+.day-num-big{font-size:12px;color:var(--teal-light);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:5px;}
+.day-topic{font-family:'Amiri',serif;font-size:24px;font-weight:700;color:var(--gold-light);margin-bottom:8px;line-height:1.3;}
+.day-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;}
+.modules-section{padding:16px;}
+.section-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';display:inline-block;width:3px;height:14px;background:var(--gold);border-radius:2px;}
+.modules-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.module-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px 12px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
+.module-card:active{transform:scale(.96);}
+.module-card.completed{border-color:rgba(39,174,96,.4);background:rgba(39,174,96,.08);}
+.module-icon{font-size:32px;margin-bottom:8px;display:block;}
+.module-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;}
+.module-sub{font-size:11px;color:rgba(255,255,255,.4);}
+.module-status{position:absolute;top:8px;left:8px;width:20px;height:20px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:10px;opacity:0;transition:opacity .3s;}
+.module-card.completed .module-status{opacity:1;}
+.quiz-launch-card{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.25);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .25s;margin-bottom:16px;}
+.quiz-launch-card:active{transform:scale(.98);}
+.quiz-launch-icon{width:50px;height:50px;border-radius:14px;background:rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.quiz-launch-info .title{font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;}
+.quiz-launch-info .sub{font-size:12px;color:rgba(255,255,255,.4);}
+
+/* LESSON */
+#lessonScreen{background:var(--deep);padding-bottom:90px;}
+.lesson-content{padding:18px;}
+.rule-box{background:linear-gradient(135deg,rgba(13,115,119,.3),rgba(13,115,119,.1));border:1px solid rgba(13,115,119,.5);border-right:4px solid var(--teal-light);border-radius:14px;padding:18px;margin-bottom:16px;}
+.rule-title{font-size:12px;color:var(--teal-light);font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;}
+.rule-text{font-family:'Scheherazade New',serif;font-size:20px;color:var(--gold-light);line-height:1.8;text-align:center;}
+.explain-block{background:rgba(255,255,255,.04);border-radius:14px;padding:16px;margin-bottom:12px;border-right:3px solid var(--gold);}
+.explain-head{font-size:15px;font-weight:700;color:var(--gold-light);margin-bottom:8px;display:flex;align-items:center;gap:7px;}
+.explain-body{font-size:13px;color:rgba(255,255,255,.75);line-height:1.9;}
+.explain-body strong{color:var(--gold-light);font-weight:700;}
+.examples-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.example-pill{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);padding:5px 12px;border-radius:18px;font-family:'Scheherazade New',serif;font-size:17px;color:var(--gold-light);}
+.passage-box{background:var(--cream);border-radius:18px;padding:20px;margin-bottom:14px;position:relative;}
+.passage-box p{font-family:'Scheherazade New',serif;font-size:21px;color:#2C1810;line-height:2;text-align:justify;}
+.passage-box .highlight{background:rgba(13,115,119,.2);border-radius:3px;padding:0 2px;color:var(--teal-dark);}
+.tts-btn{position:absolute;bottom:10px;left:10px;background:var(--teal);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(13,115,119,.4);}
+.vocab-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;margin-bottom:14px;}
+.vocab-scroll::-webkit-scrollbar{display:none;}
+.vocab-card{min-width:110px;background:linear-gradient(135deg,var(--deep2),rgba(13,115,119,.3));border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:14px 10px;text-align:center;flex-shrink:0;}
+.vocab-ar{font-family:'Scheherazade New',serif;font-size:24px;color:var(--gold-light);display:block;margin-bottom:5px;}
+.vocab-mean{font-size:11px;color:rgba(255,255,255,.5);line-height:1.4;}
+.tip-box{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:12px 14px;display:flex;gap:8px;align-items:flex-start;margin-bottom:12px;}
+.tip-icon{font-size:18px;flex-shrink:0;}
+.tip-text{font-size:12px;color:rgba(255,255,255,.65);line-height:1.7;}
+.imla-input{width:100%;padding:14px;border-radius:12px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:'Scheherazade New',serif;font-size:21px;text-align:right;direction:rtl;outline:none;transition:border-color .2s;margin-bottom:8px;}
+.imla-input:focus{border-color:var(--teal);}
+.bottom-action{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:14px 18px;background:linear-gradient(0deg,var(--deep) 70%,transparent);z-index:50;}
+.btn-primary{width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--teal-dark),var(--teal),var(--teal-light));color:#fff;font-size:17px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;box-shadow:0 6px 20px rgba(13,115,119,.5);transition:all .3s;}
+.btn-primary:active{transform:scale(.97);}
+
+/* QUIZ */
+#quizScreen{background:var(--deep);padding-bottom:30px;}
+.quiz-header{padding:18px 18px 10px;}
+.quiz-progress-bar{height:5px;background:rgba(255,255,255,.1);border-radius:3px;margin-bottom:7px;overflow:hidden;}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:3px;transition:width .5s ease;}
+.quiz-qnum{font-size:12px;color:rgba(255,255,255,.4);text-align:center;}
+.quiz-body{padding:0 18px 18px;}
+.quiz-type-badge{display:inline-block;padding:3px 12px;border-radius:10px;font-size:11px;font-weight:700;margin-bottom:14px;}
+.quiz-type-badge.grammar{background:rgba(41,128,185,.2);color:#5DADE2;border:1px solid rgba(41,128,185,.3);}
+.quiz-type-badge.reading{background:rgba(39,174,96,.2);color:#58D68D;border:1px solid rgba(39,174,96,.3);}
+.quiz-type-badge.spelling{background:rgba(142,68,173,.2);color:#C39BD3;border:1px solid rgba(142,68,173,.3);}
+.quiz-type-badge.expression{background:rgba(230,126,34,.2);color:#F0B27A;border:1px solid rgba(230,126,34,.3);}
+.quiz-question{font-family:'Scheherazade New',serif;font-size:22px;color:#fff;line-height:1.7;margin-bottom:20px;background:rgba(255,255,255,.05);padding:18px;border-radius:14px;text-align:center;}
+.quiz-options{display:flex;flex-direction:column;gap:9px;}
+.quiz-option{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);border-radius:13px;padding:14px 18px;font-family:'Scheherazade New',serif;font-size:19px;color:#fff;cursor:pointer;transition:all .25s;text-align:right;display:flex;align-items:center;justify-content:space-between;}
+.option-letter{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-family:'Cairo',sans-serif;font-weight:700;flex-shrink:0;}
+.quiz-option:active{transform:scale(.98);}
+.quiz-option.correct{border-color:var(--green);background:rgba(39,174,96,.15);animation:correct-flash .4s ease;}
+.quiz-option.wrong{border-color:var(--red);background:rgba(231,76,60,.15);animation:shake .4s ease;}
+.quiz-option.reveal{border-color:var(--green);background:rgba(39,174,96,.1);}
+@keyframes correct-flash{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.feedback-banner{padding:14px 16px;border-radius:14px;margin-top:13px;font-size:14px;line-height:1.7;display:none;}
+.feedback-banner.correct{background:rgba(39,174,96,.15);border:1px solid rgba(39,174,96,.4);color:#58D68D;display:block;}
+.feedback-banner.wrong{background:rgba(231,76,60,.12);border:1px solid rgba(231,76,60,.3);color:#EC7063;display:block;}
+.feedback-title{font-size:17px;font-weight:900;margin-bottom:5px;}
+.btn-next{width:100%;margin-top:13px;padding:14px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--deep);font-size:16px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;display:none;}
+.btn-next.show{display:block;}
+
+/* RESULT */
+#resultScreen{background:var(--deep);align-items:center;justify-content:center;padding:36px 20px;text-align:center;}
+.result-circle{width:150px;height:150px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 24px;border:4px solid;}
+.result-circle.excellent{border-color:var(--gold);background:rgba(201,168,76,.1);box-shadow:0 0 50px rgba(201,168,76,.3);}
+.result-circle.good{border-color:var(--teal-light);background:rgba(13,115,119,.15);box-shadow:0 0 50px rgba(13,115,119,.3);}
+.result-circle.needs-work{border-color:var(--orange);background:rgba(230,126,34,.1);}
+.result-emoji{font-size:44px;}
+.result-score{font-size:34px;font-weight:900;color:var(--gold-light);}
+.result-pct{font-size:13px;color:rgba(255,255,255,.5);}
+.result-title{font-family:'Amiri',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:8px;}
+.result-msg{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:24px;}
+.result-breakdown{width:100%;background:rgba(255,255,255,.05);border-radius:14px;padding:14px;margin-bottom:20px;}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;}
+.breakdown-row:last-child{border-bottom:none;}
+.breakdown-label{color:rgba(255,255,255,.6);}
+.breakdown-val{font-weight:700;color:#fff;}
+
+/* NEXT DAY Banner */
+.next-day-banner{background:linear-gradient(135deg,rgba(39,174,96,.15),rgba(13,115,119,.2));border:1px solid rgba(39,174,96,.4);border-radius:16px;padding:18px;margin-bottom:16px;text-align:center;}
+.next-day-banner .ndb-title{font-size:18px;font-weight:900;color:#58D68D;margin-bottom:6px;}
+.next-day-banner .ndb-sub{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:14px;}
+.btn-next-day{width:100%;padding:14px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--green),#1a8a47);color:#fff;font-size:17px;font-weight:900;font-family:'Cairo',sans-serif;cursor:pointer;box-shadow:0 6px 20px rgba(39,174,96,.4);}
+
+/* CALENDAR */
+#calendarScreen{background:var(--deep);padding-bottom:20px;}
+.cal-month-title{font-family:'Amiri',serif;font-size:20px;font-weight:700;color:var(--gold-light);text-align:center;padding:14px 0 10px;}
+.cal-week-header{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:0 14px;margin-bottom:3px;}
+.cal-week-day{text-align:center;font-size:10px;color:rgba(255,255,255,.35);padding:3px 0;}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:0 14px;}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:9px;font-size:12px;cursor:pointer;transition:all .2s;position:relative;flex-direction:column;}
+.cal-day.empty{background:transparent;cursor:default;}
+.cal-day.future{background:rgba(255,255,255,.04);color:rgba(255,255,255,.25);}
+.cal-day.done{background:rgba(39,174,96,.2);border:1px solid rgba(39,174,96,.4);color:#58D68D;}
+.cal-day.current{background:linear-gradient(135deg,var(--teal),var(--teal-light));color:#fff;font-weight:700;box-shadow:0 4px 12px rgba(13,115,119,.5);}
+.cal-day.missed{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.2);color:rgba(231,76,60,.6);}
+.cal-dot{width:4px;height:4px;border-radius:50%;margin-top:2px;display:none;}
+.cal-day.done .cal-dot{display:block;background:var(--green);}
+.cal-day.current .cal-dot{display:block;background:#fff;}
+
+/* ACTIVITIES */
+#activitiesScreen{background:var(--deep);padding-bottom:80px;}
+.activities-list{padding:14px;}
+.activity-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:all .25s;}
+.activity-card:active{transform:scale(.98);}
+.act-icon-wrap{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.act-icon-wrap.blue{background:rgba(41,128,185,.2);}
+.act-icon-wrap.green{background:rgba(39,174,96,.2);}
+.act-icon-wrap.purple{background:rgba(142,68,173,.2);}
+.act-icon-wrap.orange{background:rgba(230,126,34,.2);}
+.act-icon-wrap.gold{background:rgba(201,168,76,.2);}
+.act-info{flex:1;}
+.act-name{font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;}
+.act-desc{font-size:11px;color:rgba(255,255,255,.4);}
+.act-arrow{color:rgba(255,255,255,.2);font-size:14px;}
+
+/* Stars FX */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:999;display:none;}
+.star{position:absolute;font-size:22px;animation:star-fly 1.5s ease forwards;}
+@keyframes star-fly{from{transform:translateY(0) scale(0);opacity:1}to{transform:translateY(-200px) scale(1.5);opacity:0}}
+
+/* Day Complete Overlay */
+.day-complete-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;display:none;}
+.day-complete-overlay.show{display:flex;}
+.dco-card{background:linear-gradient(135deg,var(--deep2),var(--teal-dark));border:2px solid var(--gold);border-radius:24px;padding:30px 24px;text-align:center;max-width:360px;width:100%;}
+.dco-emoji{font-size:64px;margin-bottom:12px;}
+.dco-title{font-family:'Amiri',serif;font-size:28px;font-weight:700;color:var(--gold-light);margin-bottom:8px;}
+.dco-msg{font-size:14px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:20px;}
+.dco-stars{font-size:18px;color:var(--gold);margin-bottom:20px;font-weight:700;}
+.btn-continue{width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--deep);font-size:17px;font-weight:900;font-family:'Cairo',sans-serif;cursor:pointer;box-shadow:0 8px 25px rgba(201,168,76,.5);margin-bottom:8px;}
+.btn-stay{width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-size:14px;font-family:'Cairo',sans-serif;cursor:pointer;}
+
+.cal-filter-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);padding:6px 12px;border-radius:20px;font-size:12px;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.cal-filter-btn.active{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700;}
+.day-list-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;margin-bottom:9px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:all .2s;}
+.day-list-card:active{transform:scale(.98);}
+.day-list-card.done{border-color:rgba(39,174,96,.3);background:rgba(39,174,96,.07);}
+.day-list-card.current-day{border-color:var(--gold);background:rgba(201,168,76,.08);box-shadow:0 0 20px rgba(201,168,76,.15);}
+.day-list-card.future-day{opacity:.55;}
+.dlc-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0;}
+.dlc-num.done{background:rgba(39,174,96,.2);color:#58D68D;}
+.dlc-num.current{background:linear-gradient(135deg,var(--teal),var(--gold));color:#fff;box-shadow:0 4px 12px rgba(13,115,119,.4);}
+.dlc-num.future{background:rgba(255,255,255,.07);color:rgba(255,255,255,.35);}
+.dlc-info{flex:1;min-width:0;}
+.dlc-topic{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dlc-sub{font-size:11px;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:6px;}
+.dlc-status{font-size:18px;flex-shrink:0;}
+.month-header{font-family:'Amiri',serif;font-size:18px;font-weight:700;color:var(--gold-light);padding:14px 0 8px;display:flex;align-items:center;gap:8px;}
+.month-header::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.2);}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px;}
+.divider{height:1px;background:rgba(255,255,255,.06);margin:12px 0;}
+
+/* PASSWORD SCREEN */
+#pwdScreen{background:linear-gradient(160deg,var(--deep) 0%,var(--deep2) 50%,var(--teal-dark) 100%);align-items:center;justify-content:center;padding:40px 20px;text-align:center;min-height:100vh;}
+.pwd-logo{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--gold));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 0 40px rgba(201,168,76,.4);font-size:52px;animation:pulse-glow 3s infinite;}
+.pwd-title{font-family:'Amiri',serif;font-size:32px;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.pwd-subtitle{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:36px;}
+.pwd-box{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:28px 24px;}
+.pwd-label{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px;text-align:right;}
+.pwd-input{width:100%;padding:15px 18px;border-radius:14px;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.08);color:#fff;font-size:18px;font-family:'Cairo',sans-serif;text-align:center;outline:none;transition:border-color .3s;letter-spacing:3px;margin-bottom:8px;}
+.pwd-input:focus{border-color:var(--gold);}
+.pwd-input::placeholder{letter-spacing:1px;color:rgba(255,255,255,.3);font-size:14px;}
+.pwd-error{font-size:13px;color:#E74C3C;margin-bottom:14px;min-height:20px;transition:opacity .3s;}
+.pwd-btn{width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));color:var(--deep);font-size:18px;font-weight:900;font-family:'Cairo',sans-serif;cursor:pointer;box-shadow:0 8px 25px rgba(201,168,76,.5);transition:all .3s;}
+.pwd-btn:active{transform:scale(.97);}
+.pwd-hint{font-size:11px;color:rgba(255,255,255,.2);margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<!-- Day Complete Overlay -->
+<div class="day-complete-overlay" id="dayCompleteOverlay">
+  <div class="dco-card">
+    <div class="dco-emoji">🎉</div>
+    <div class="dco-title" id="dcoTitle">أحسنت!</div>
+    <div class="dco-msg" id="dcoMsg">لقد أنهيت اليوم بنجاح!</div>
+    <div class="dco-stars" id="dcoStars">+٢٠ نجمة ⭐</div>
+    <button class="btn-continue" onclick="advanceToNextDay()">انتقل لليوم التالي ▶</button>
+    <button class="btn-stay" onclick="closeDayComplete()">البقاء في هذا اليوم</button>
+  </div>
+</div>
+
+<!-- =================== PASSWORD =================== -->
+<div class="screen active" id="pwdScreen">
+  <div class="pwd-logo">🔐</div>
+  <div class="pwd-title">لغتي العربية</div>
+  <div class="pwd-subtitle">الصف الخامس الأساسي — المنهج اللبناني</div>
+  <div class="pwd-box">
+    <div class="pwd-label">أدخل كلمة المرور للدخول</div>
+    <input class="pwd-input" type="password" id="pwdInput" placeholder="كلمة المرور..." onkeydown="if(event.key==='Enter') checkPwd()">
+    <div class="pwd-error" id="pwdError"></div>
+    <button class="pwd-btn" onclick="checkPwd()">🚀 دخول</button>
+  </div>
+  <div class="pwd-hint">تطبيق خاص بحسن</div>
+</div>
+
+<div class="app">
+<!-- =================== HOME =================== -->
+<div class="screen" id="homeScreen">
+  <div class="logo-circle">📚</div>
+  <div class="app-title">لغتي العربية</div>
+  <div class="app-subtitle">المنهج اللبناني</div>
+  <div class="app-grade">الصف الخامس الأساسي</div>
+  <div class="progress-ring-wrap">
+    <svg width="160" height="160" viewBox="0 0 160 160">
+      <defs>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#C9A84C"/>
+          <stop offset="100%" style="stop-color:#F0D080"/>
+        </linearGradient>
+      </defs>
+      <circle class="progress-ring-bg" cx="80" cy="80" r="68"/>
+      <circle class="progress-ring-fill" cx="80" cy="80" r="68" id="progressRing" stroke-dasharray="427" stroke-dashoffset="427"/>
+    </svg>
+    <div class="progress-center">
+      <div class="progress-day-num" id="homeDay">١</div>
+      <div class="progress-day-label">اليوم</div>
+      <div class="progress-total" id="homeTotal">من ٦٠ يومًا</div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-val" id="statStreak">0</div><div class="stat-lbl">متواصل</div></div>
+    <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-val" id="statStars">0</div><div class="stat-lbl">نجوم</div></div>
+    <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-val" id="statScore">-</div><div class="stat-lbl">آخر نتيجة</div></div>
+  </div>
+  <button class="btn-start" onclick="showDay()">🚀 ابدأ نشاط اليوم</button>
+  <div style="display:flex;gap:8px;width:100%">
+    <button class="btn-secondary" style="flex:1;font-size:13px;" onclick="showScreen('calendarScreen')">📅 التقويم</button>
+    <button class="btn-secondary" style="flex:1;font-size:13px;" onclick="showScreen('activitiesScreen')">📋 النشاطات</button>
+  </div>
+  <div style="margin-top:10px;width:100%;text-align:center;">
+    <button onclick="resetProgress()" style="background:none;border:none;color:rgba(255,255,255,.2);font-size:11px;cursor:pointer;font-family:'Cairo',sans-serif;">إعادة ضبط التقدم</button>
+  </div>
+</div>
+
+<!-- =================== DAY SCREEN =================== -->
+<div class="screen" id="dayScreen">
+  <div class="topbar">
+    <button class="topbar-back" onclick="showScreen('homeScreen')">◀ رجوع</button>
+    <div class="topbar-title" id="dayTopTitle">اليوم ١</div>
+    <div class="day-badge" id="dayBadge">أسبوع ١</div>
+  </div>
+  <div class="day-hero">
+    <div class="day-num-big" id="dayNumBig">اليوم الأول</div>
+    <div class="day-topic" id="dayTopic">-</div>
+    <div class="day-desc" id="dayDesc">-</div>
+  </div>
+  <div class="modules-section">
+    <div class="section-title">نشاطات اليوم</div>
+    <div class="modules-grid">
+      <div class="module-card" onclick="startLesson('qawaid')" id="mod-qawaid">
+        <div class="module-status">✓</div>
+        <span class="module-icon">📐</span>
+        <div class="module-name">القواعد</div>
+        <div class="module-sub">درس مع شرح</div>
+      </div>
+      <div class="module-card" onclick="startLesson('qiraah')" id="mod-qiraah">
+        <div class="module-status">✓</div>
+        <span class="module-icon">📖</span>
+        <div class="module-name">القراءة</div>
+        <div class="module-sub">نص ومفردات</div>
+      </div>
+      <div class="module-card" onclick="startLesson('imla')" id="mod-imla">
+        <div class="module-status">✓</div>
+        <span class="module-icon">✏️</span>
+        <div class="module-name">الإملاء</div>
+        <div class="module-sub">تدريب كتابي</div>
+      </div>
+      <div class="module-card" onclick="startLesson('taabir')" id="mod-taabir">
+        <div class="module-status">✓</div>
+        <span class="module-icon">🖊️</span>
+        <div class="module-name">التعبير</div>
+        <div class="module-sub">فقرة إنشائية</div>
+      </div>
+    </div>
+    <div class="section-title">اختبار اليوم</div>
+    <div class="quiz-launch-card" onclick="startDailyQuiz()">
+      <div class="quiz-launch-icon">📝</div>
+      <div class="quiz-launch-info">
+        <div class="title">الاختبار اليومي</div>
+        <div class="sub">١٠ أسئلة — قواعد + قراءة + إملاء</div>
+      </div>
+      <div style="font-size:20px;">🏆</div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== LESSON =================== -->
+<div class="screen" id="lessonScreen">
+  <div class="topbar">
+    <button class="topbar-back" onclick="showScreen('dayScreen')">◀ رجوع</button>
+    <div class="topbar-title" id="lessonTitle">القواعد</div>
+    <div class="day-badge" id="lessonBadge">اليوم ١</div>
+  </div>
+  <div class="lesson-content" id="lessonContent"></div>
+  <div class="bottom-action">
+    <button class="btn-primary" onclick="lessonDone()">✅ أكملت الدرس</button>
+  </div>
+</div>
+
+<!-- =================== QUIZ =================== -->
+<div class="screen" id="quizScreen">
+  <div class="topbar">
+    <button class="topbar-back" onclick="showScreen('dayScreen')">◀ رجوع</button>
+    <div class="topbar-title">الاختبار اليومي</div>
+    <div class="day-badge" id="quizBadge">اليوم ١</div>
+  </div>
+  <div class="quiz-header">
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill" style="width:0%"></div></div>
+    <div class="quiz-qnum" id="quizQNum">السؤال ١ من ١٠</div>
+  </div>
+  <div class="quiz-body" id="quizBody"></div>
+</div>
+
+<!-- =================== RESULT =================== -->
+<div class="screen" id="resultScreen">
+  <div class="result-circle" id="resultCircle">
+    <div class="result-emoji" id="resultEmoji">🏆</div>
+    <div class="result-score" id="resultScore">8/10</div>
+    <div class="result-pct" id="resultPct">٨٠٪</div>
+  </div>
+  <div class="result-title" id="resultTitle">ممتاز!</div>
+  <div class="result-msg" id="resultMsg"></div>
+  <div class="result-breakdown">
+    <div class="breakdown-row"><span class="breakdown-label">📐 قواعد</span><span class="breakdown-val" id="brGrammar">-</span></div>
+    <div class="breakdown-row"><span class="breakdown-label">📖 قراءة</span><span class="breakdown-val" id="brReading">-</span></div>
+    <div class="breakdown-row"><span class="breakdown-label">✏️ إملاء</span><span class="breakdown-val" id="brSpelling">-</span></div>
+    <div class="breakdown-row"><span class="breakdown-label">⏱ الوقت</span><span class="breakdown-val" id="brTime">-</span></div>
+  </div>
+  <div id="nextDaySection" style="display:none">
+    <div class="next-day-banner">
+      <div class="ndb-title">🎉 يوم مكتمل!</div>
+      <div class="ndb-sub" id="ndbMsg">أنهيت اليوم بنجاح! هل تريد الانتقال لليوم التالي الآن؟</div>
+      <button class="btn-next-day" onclick="showDayComplete()">الانتقال لليوم <span id="nextDayNum">٢</span> ▶</button>
+    </div>
+  </div>
+  <button class="btn-start" onclick="showScreen('homeScreen')">🏠 الرئيسية</button>
+  <button class="btn-secondary" onclick="startDailyQuiz()">🔄 أعد الاختبار</button>
+</div>
+
+<!-- =================== CALENDAR =================== -->
+<div class="screen" id="calendarScreen">
+  <div class="topbar">
+    <button class="topbar-back" onclick="showScreen('homeScreen')">◀ رجوع</button>
+    <div class="topbar-title">جميع الأيام</div>
+    <div class="day-badge">٦٠ يومًا</div>
+  </div>
+  <div style="display:flex;gap:7px;padding:10px 14px 8px;background:rgba(10,22,40,.98);position:sticky;top:57px;z-index:90;border-bottom:1px solid rgba(255,255,255,.06);">
+    <button class="cal-filter-btn active" id="fAll" onclick="filterCal('all')">الكل</button>
+    <button class="cal-filter-btn" id="fDone" onclick="filterCal('done')">✅ مكتمل</button>
+    <button class="cal-filter-btn" id="fCurrent" onclick="filterCal('current')">📍 حالي</button>
+    <button class="cal-filter-btn" id="fFuture" onclick="filterCal('future')">🔒 قادم</button>
+  </div>
+  <div id="calendarContent" style="overflow-y:auto;padding:10px 14px 80px;flex:1;"></div>
+</div>
+
+<!-- =================== DAY DETAIL =================== -->
+<div class="screen" id="dayDetailScreen">
+  <div class="topbar">
+    <button class="topbar-back" onclick="showScreen('calendarScreen')">◀ الأيام</button>
+    <div class="topbar-title" id="ddTitle">اليوم ١</div>
+    <div class="day-badge" id="ddBadge">أسبوع ١</div>
+  </div>
+  <div class="day-hero">
+    <div class="day-num-big" id="ddNumBig">اليوم الأول</div>
+    <div class="day-topic" id="ddTopic">-</div>
+    <div class="day-desc" id="ddDesc">-</div>
+  </div>
+  <div class="modules-section">
+    <div class="section-title">الدروس</div>
+    <div class="modules-grid">
+      <div class="module-card" onclick="openDayLesson('qawaid')" id="dd-mod-qawaid"><div class="module-status">✓</div><span class="module-icon">📐</span><div class="module-name">القواعد</div><div class="module-sub">درس مع شرح</div></div>
+      <div class="module-card" onclick="openDayLesson('qiraah')" id="dd-mod-qiraah"><div class="module-status">✓</div><span class="module-icon">📖</span><div class="module-name">القراءة</div><div class="module-sub">نص ومفردات</div></div>
+      <div class="module-card" onclick="openDayLesson('imla')" id="dd-mod-imla"><div class="module-status">✓</div><span class="module-icon">✏️</span><div class="module-name">الإملاء</div><div class="module-sub">تدريب كتابي</div></div>
+      <div class="module-card" onclick="openDayLesson('taabir')" id="dd-mod-taabir"><div class="module-status">✓</div><span class="module-icon">🖊️</span><div class="module-name">التعبير</div><div class="module-sub">فقرة إنشائية</div></div>
+    </div>
+    <div class="section-title">الاختبار</div>
+    <div class="quiz-launch-card" onclick="openDayQuiz()">
+      <div class="quiz-launch-icon">📝</div>
+      <div class="quiz-launch-info"><div class="title">اختبار اليوم</div><div class="sub">١٠ أسئلة متنوعة</div></div>
+      <div style="font-size:20px;">🏆</div>
+    </div>
+    <div style="height:20px;"></div>
+  </div>
+</div>
+
+<!-- =================== ACTIVITIES =================== -->
+<div class="screen" id="activitiesScreen">
+  <div class="topbar">
+    <button class="topbar-back" onclick="showScreen('homeScreen')">◀ رجوع</button>
+    <div class="topbar-title">نشاطات الدعم</div>
+    <div class="day-badge">اللغة العربية</div>
+  </div>
+  <div class="activities-list">
+    <div class="section-title" style="padding-right:0">النشاطات</div>
+    <div class="activity-card" onclick="startLesson('qawaid')"><div class="act-icon-wrap blue">📐</div><div class="act-info"><div class="act-name">دروس القواعد</div><div class="act-desc">الفعل، الاسم، الحروف، الجملة الفعلية والاسمية</div></div><div class="act-arrow">◀</div></div>
+    <div class="activity-card" onclick="startLesson('qiraah')"><div class="act-icon-wrap green">📖</div><div class="act-info"><div class="act-name">نصوص القراءة</div><div class="act-desc">فهم المقروء، المفردات، الفكرة الرئيسية</div></div><div class="act-arrow">◀</div></div>
+    <div class="activity-card" onclick="startLesson('imla')"><div class="act-icon-wrap purple">✏️</div><div class="act-info"><div class="act-name">تدريب الإملاء</div><div class="act-desc">التاء المربوطة، الهمزة، الألف اللينة</div></div><div class="act-arrow">◀</div></div>
+    <div class="activity-card" onclick="startLesson('taabir')"><div class="act-icon-wrap orange">🖊️</div><div class="act-info"><div class="act-name">التعبير الكتابي</div><div class="act-desc">كتابة فقرات، وصف، قصة، رأي</div></div><div class="act-arrow">◀</div></div>
+    <div class="activity-card" onclick="startLesson('mahfuzat')"><div class="act-icon-wrap gold">🌙</div><div class="act-info"><div class="act-name">المحفوظات</div><div class="act-desc">شعر، نثر، أمثال وحكم</div></div><div class="act-arrow">◀</div></div>
+    <div class="divider"></div>
+    <div class="section-title" style="padding-right:0">الاختبارات</div>
+    <div class="activity-card" onclick="startDailyQuiz()"><div class="act-icon-wrap gold">📝</div><div class="act-info"><div class="act-name">الاختبار اليومي</div><div class="act-desc">١٠ أسئلة شاملة مع تصحيح فوري</div></div><div class="act-arrow">◀</div></div>
+  </div>
+</div>
+</div><!-- .app -->
+
+<script>
+// ============================================================
+// STORAGE — localStorage with fallback
+// ============================================================
+const SAVE_KEY = 'arabic5_v2';
+
+function saveState() {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      currentDay: S.currentDay,
+      completedDays: S.completedDays,
+      completedModules: S.completedModules,
+      stars: S.stars,
+      streak: S.streak,
+      lastScore: S.lastScore,
+      lastPlayed: S.lastPlayed
+    }));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      S.currentDay = saved.currentDay || 1;
+      S.completedDays = saved.completedDays || [];
+      S.completedModules = saved.completedModules || {};
+      S.stars = saved.stars || 0;
+      S.streak = saved.streak || 0;
+      S.lastScore = saved.lastScore || null;
+      S.lastPlayed = saved.lastPlayed || null;
+    }
+  } catch(e) {}
+}
+
+// ============================================================
+// STATE
+// ============================================================
+const S = {
+  currentDay: 1,
+  completedDays: [],      // [1,2,3,...]
+  completedModules: {},   // { "1_qawaid": true, "1_qiraah": true, ... }
+  stars: 0,
+  streak: 0,
+  lastScore: null,
+  lastPlayed: null,
+  // runtime only (not persisted)
+  quizQuestions: [],
+  currentQ: 0,
+  quizAnswers: [],
+  quizStartTime: null,
+  lessonType: null,
+};
+
+// ============================================================
+// CURRICULUM — 60 DAYS FULL
+// ============================================================
+const CURRICULUM = [
+/* W1 - الفعل وأقسامه */
+{d:1,w:1,topic:'أقسام الكلام',desc:'تعرّف على أقسام الكلام الثلاثة: الاسم والفعل والحرف مع أمثلة من القرآن الكريم والحياة اليومية.'},
+{d:2,w:1,topic:'الفعل الماضي',desc:'يدل على حدث وقع قبل زمن الكلام. تعلّم علاماته وكيفية التعرف عليه في الجملة.'},
+{d:3,w:1,topic:'الفعل المضارع',desc:'يدل على حدث يقع في الحاضر أو المستقبل. تعرّف على حروف المضارعة (أنيت).'},
+{d:4,w:1,topic:'فعل الأمر',desc:'يطلب حدثًا في المستقبل. تعلّم صياغته من الفعل المضارع بحذف حرف المضارعة.'},
+{d:5,w:1,topic:'الجملة الفعلية',desc:'دراسة الجملة الفعلية وأركانها: الفعل والفاعل والمفعول به. تمارين تطبيقية غنية.'},
+{d:6,w:1,topic:'الفاعل ونائب الفاعل',desc:'الفاعل: من قام بالفعل. نائب الفاعل: ما ناب عن الفاعل في الفعل المبني للمجهول.'},
+{d:7,w:1,topic:'مراجعة: الفعل وأنواعه',desc:'مراجعة شاملة لكل ما تعلمناه عن الفعل الماضي والمضارع والأمر. تمارين مكثفة.'},
+/* W2 - الاسم */
+{d:8,w:2,topic:'الاسم المعرّف والنكرة',desc:'الفرق بين المعرّف (المعروف) والنكرة (غير المعروف) وأدوات التعريف في العربية.'},
+{d:9,w:2,topic:'المذكر والمؤنث',desc:'أنواع التأنيث والتذكير في الأسماء العربية وعلامات التأنيث المختلفة.'},
+{d:10,w:2,topic:'المفرد والمثنى والجمع',desc:'كيف نصوغ المثنى وجمع المذكر السالم وجمع المؤنث السالم وجمع التكسير.'},
+{d:11,w:2,topic:'الاسم الموصول',desc:'الأسماء الموصولة: الذي، التي، الذين، اللواتي، واستخدامها في الجملة بشكل صحيح.'},
+{d:12,w:2,topic:'الضمائر المتصلة',desc:'ضمائر المتكلم والمخاطب والغائب المتصلة بالأفعال والأسماء وحروف الجر.'},
+{d:13,w:2,topic:'الضمائر المنفصلة',desc:'الضمائر المنفصلة للمتكلم والمخاطب والغائب وكيف تُستخدم في الجملة الاسمية.'},
+{d:14,w:2,topic:'مراجعة: الاسم وأنواعه',desc:'مراجعة الاسم والمعرفة والنكرة والضمائر. تمارين تحديد وتصنيف.'},
+/* W3 - الإعراب الأساسي */
+{d:15,w:3,topic:'المبتدأ والخبر',desc:'الجملة الاسمية: المبتدأ (ما يُبدأ به الكلام) والخبر (ما يُخبر به عن المبتدأ) وأنواع الخبر.'},
+{d:16,w:3,topic:'النعت والمنعوت',desc:'النعت (الصفة) وكيف يتبع منعوته في الإعراب والتذكير والتأنيث والتعريف.'},
+{d:17,w:3,topic:'الإضافة',desc:'المضاف والمضاف إليه: شروط الإضافة وتأثيرها في الإعراب والمعنى.'},
+{d:18,w:3,topic:'حروف الجر',desc:'حروف الجر التسعة وأكثر: من، إلى، عن، على، في، الباء، اللام، الكاف، الواو ومعانيها.'},
+{d:19,w:3,topic:'المفعول به',desc:'المفعول به المنصوب: تعريفه وعلامات نصبه وكيف نجده في الجملة الفعلية.'},
+{d:20,w:3,topic:'الحال',desc:'الحال: الاسم المنصوب الذي يبيّن هيئة الفاعل أو المفعول به عند وقوع الحدث.'},
+{d:21,w:3,topic:'مراجعة: الإعراب',desc:'مراجعة شاملة للمبتدأ والخبر والنعت والإضافة وحروف الجر والمفعول به.'},
+/* W4 - القراءة والفهم */
+{d:22,w:4,topic:'الفكرة الرئيسية',desc:'كيف نستخرج الفكرة الرئيسية من النص المقروء وكيف نعبر عنها بأسلوبنا الخاص.'},
+{d:23,w:4,topic:'الأفكار الفرعية',desc:'استخراج الأفكار الفرعية وربطها بالفكرة الرئيسية وبناء خريطة ذهنية للنص.'},
+{d:24,w:4,topic:'المفردات في السياق',desc:'فهم معنى الكلمة الجديدة من سياق الجملة والفقرة دون الحاجة إلى القاموس.'},
+{d:25,w:4,topic:'أسلوب التشبيه',desc:'التشبيه: أركانه (المشبه، المشبه به، أداة التشبيه، وجه الشبه) وأنواعه.'},
+{d:26,w:4,topic:'الاستعارة والكناية',desc:'الاستعارة (حذف أحد طرفي التشبيه) والكناية (التعبير غير المباشر) في الأدب العربي.'},
+{d:27,w:4,topic:'أسلوب الوصف',desc:'كيف يُثري الوصف النص الأدبي. تعلّم استخدام الصفات والمقارنات في الوصف.'},
+{d:28,w:4,topic:'مراجعة: فهم المقروء',desc:'مراجعة مهارات القراءة: الفكرة الرئيسية، المفردات، الأساليب البلاغية.'},
+/* W5 - الإملاء */
+{d:29,w:5,topic:'التاء المربوطة والهاء',desc:'الفرق بين التاء المربوطة (ة) والهاء (ه) في الكتابة العربية وقاعدة استخدام كل منهما.'},
+{d:30,w:5,topic:'همزة الوصل وهمزة القطع',desc:'همزة الوصل (تُحذف في الوصل) وهمزة القطع (تثبت دائمًا) وكيف نميّز بينهما.'},
+{d:31,w:5,topic:'الهمزة المتوسطة',desc:'قواعد كتابة الهمزة المتوسطة على الألف أو الواو أو الياء أو على السطر.'},
+{d:32,w:5,topic:'الهمزة المتطرفة',desc:'قواعد كتابة الهمزة في آخر الكلمة بحسب حركة الحرف الذي قبلها.'},
+{d:33,w:5,topic:'الألف اللينة',desc:'الألف المقصورة (ى) والألف الممدودة (ا) في نهاية الكلمة وقواعد التمييز بينهما.'},
+{d:34,w:5,topic:'النون والتنوين',desc:'قواعد كتابة النون الساكنة والتنوين عند الإدغام والإخفاء والإظهار والقلب.'},
+{d:35,w:5,topic:'مراجعة: قواعد الإملاء',desc:'مراجعة شاملة لقواعد الإملاء: الهمزات والألف اللينة والتاء المربوطة.'},
+/* W6 - التعبير الكتابي */
+{d:36,w:6,topic:'الفقرة التعبيرية',desc:'بناء الفقرة التعبيرية المتكاملة: المقدمة والعرض والخاتمة مع أمثلة مفصلة.'},
+{d:37,w:6,topic:'التعبير الوصفي',desc:'كيف نكتب فقرة وصفية لمكان أو شخص أو حيوان باستخدام الحواس الخمس.'},
+{d:38,w:6,topic:'التعبير السردي',desc:'سرد قصة قصيرة بترتيب منطقي زمني مع استخدام الروابط المناسبة.'},
+{d:39,w:6,topic:'التعبير الحجاجي',desc:'كيف نعبر عن رأينا بأسلوب مقنع، نطرح الفكرة، ندعمها، نرد على الاعتراض.'},
+{d:40,w:6,topic:'كتابة الرسالة',desc:'قواعد كتابة الرسالة: المقدمة، العرض، الخاتمة، الرسالة الرسمية والغير رسمية.'},
+{d:41,w:6,topic:'فن التلخيص',desc:'مهارة تلخيص النص بأسلوبنا الخاص: الاحتفاظ بالأفكار الرئيسية وحذف الفرعية.'},
+{d:42,w:6,topic:'مراجعة: التعبير الكتابي',desc:'مراجعة أساليب التعبير: الوصف والسرد والحجاج والرسالة والتلخيص.'},
+/* W7 - أساليب اللغة */
+{d:43,w:7,topic:'أسلوب الاستفهام',desc:'أدوات الاستفهام وأغراضها البلاغية في اللغة العربية مع تمارين تطبيقية.'},
+{d:44,w:7,topic:'أسلوب النداء',desc:'أدوات النداء (يا، أيا، هيا، أي، آ) وإعراب المنادى في أحواله المختلفة.'},
+{d:45,w:7,topic:'أسلوب الأمر والنهي',desc:'فعل الأمر وفعل النهي وأغراضهما البلاغية ودلالاتهما في السياق.'},
+{d:46,w:7,topic:'أسلوب التوكيد',desc:'التوكيد اللفظي والمعنوي وألفاظ التوكيد: نفسه، عينه، كلاهما، كلتاهما، كلهم.'},
+{d:47,w:7,topic:'أسلوب الاستثناء',desc:'الاستثناء بـ"إلا" وأنواعه: المستثنى المفرّغ والمستثنى التام والمنقطع.'},
+{d:48,w:7,topic:'الميزان الصرفي',desc:'مقدمة في الميزان الصرفي: الفاء والعين واللام في الأفعال الثلاثية وأوزانها.'},
+{d:49,w:7,topic:'مراجعة: الأساليب',desc:'مراجعة الاستفهام والنداء والأمر والنهي والتوكيد والاستثناء والصرف.'},
+/* W8 - الأدب والشعر */
+{d:50,w:8,topic:'تذوق الشعر العربي',desc:'مقدمة في الشعر العربي: أغراضه (مدح، هجاء، رثاء، غزل، حماسة، وصف) وخصائصه.'},
+{d:51,w:8,topic:'المحفوظات: شعر الوطن',desc:'قصيدة وطنية لبنانية: قراءة وتحليل وحفظ مع استخراج الصور البيانية.'},
+{d:52,w:8,topic:'النثر الفني',desc:'الفرق بين الشعر والنثر. الرسائل الأدبية والمقامات والخطب في التراث العربي.'},
+{d:53,w:8,topic:'الأمثال العربية',desc:'الأمثال العربية الشائعة: معانيها ومواضعها وكيف نستخدمها في الكتابة.'},
+{d:54,w:8,topic:'القصة القصيرة',desc:'عناصر القصة القصيرة: الشخصيات، الحدث، المكان، الزمان، الحبكة، الخاتمة.'},
+{d:55,w:8,topic:'الحوار الأدبي',desc:'أسلوب الحوار في القصة والمسرحية. كيف نكتب حوارًا حيًا معبرًا عن شخصيات.'},
+{d:56,w:8,topic:'مراجعة: الأدب والشعر',desc:'مراجعة الشعر والنثر والأمثال والقصة والحوار. تحليل نموذجي لنصوص أدبية.'},
+/* W9 - المراجعة النهائية */
+{d:57,w:9,topic:'مراجعة نهائية: القواعد',desc:'مراجعة شاملة: الفعل، الاسم، الجملة، الإعراب، الأساليب، الصرف.'},
+{d:58,w:9,topic:'مراجعة نهائية: القراءة والإملاء',desc:'مراجعة مهارات القراءة والفهم وقواعد الإملاء الأساسية مع تمارين مكثفة.'},
+{d:59,w:9,topic:'مراجعة نهائية: التعبير والأدب',desc:'مراجعة التعبير الكتابي بأنواعه والأدب العربي ومصطلحاته الأساسية.'},
+{d:60,w:9,topic:'🎉 يوم الإنجاز!',desc:'أنهيت رحلة ٦٠ يومًا في اللغة العربية! أنت بطل حقيقي. هذه لحظة فخر تستحق الاحتفال!'},
+];
+
+// ============================================================
+// LESSON CONTENT — per module type, adapted for each day group
+// ============================================================
+function getLessonContent(type, dayNum) {
+  const week = Math.ceil(dayNum / 7);
+  const lessons = LESSON_DATA[type];
+  // pick lesson based on week (cycle through available)
+  const idx = (week - 1) % lessons.length;
+  return lessons[idx];
+}
+
+const LESSON_DATA = {
+qawaid: [
+  // lesson 0 — week 1 — الفعل
+  {title:'📐 القواعد: الفعل وأنواعه', html:`
+<div class="rule-box"><div class="rule-title">القاعدة الأساسية</div><div class="rule-text">الفِعلُ: كلمةٌ تدلُّ على حَدَثٍ وزَمَنٍ</div></div>
+<div class="explain-block"><div class="explain-head">🟡 الفعل الماضي</div><div class="explain-body">يدل على حدثٍ وقع <strong>قبل زمن الكلام</strong>.<br>علامته: قبوله تاء التأنيث الساكنة مثل: كَتَبَ<strong>ت</strong>، ذَهَبَ<strong>ت</strong>.</div><div class="examples-row"><span class="example-pill">كَتَبَ</span><span class="example-pill">ذَهَبَ</span><span class="example-pill">أَكَلَ</span><span class="example-pill">دَرَسَ</span></div></div>
+<div class="explain-block"><div class="explain-head">🟢 الفعل المضارع</div><div class="explain-body">يدل على حدثٍ يقع في <strong>الحاضر أو المستقبل</strong>.<br>يبدأ بأحد حروف <strong>أَنَيْتُ</strong> (أ، ن، ي، ت).</div><div class="examples-row"><span class="example-pill">يَكْتُبُ</span><span class="example-pill">تَذْهَبُ</span><span class="example-pill">أَدْرُسُ</span><span class="example-pill">نَلْعَبُ</span></div></div>
+<div class="explain-block"><div class="explain-head">🔴 فعل الأمر</div><div class="explain-body">يطلب حدثًا في المستقبل. يُصاغ من المضارع بحذف حرف المضارعة.<br><strong>يَكْتُبُ ← اُكْتُبْ</strong></div><div class="examples-row"><span class="example-pill">اُكْتُبْ</span><span class="example-pill">اِذْهَبْ</span><span class="example-pill">اِقْرَأْ</span><span class="example-pill">اِفْتَحْ</span></div></div>
+<div class="tip-box"><span class="tip-icon">💡</span><span class="tip-text">لتمييز الفعل: ضع <strong>"قد"</strong> قبله — إذا صحّ فهو فعل. قد كَتَبَ ✓ / قد يَكْتُبُ ✓</span></div>`},
+  // lesson 1 — week 2 — الاسم
+  {title:'📐 القواعد: الاسم وأنواعه', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">الاسمُ: كلمةٌ تدلُّ على شيءٍ ولا تقترن بزمنٍ</div></div>
+<div class="explain-block"><div class="explain-head">📌 علامات الاسم</div><div class="explain-body">يقبل: التنوين (كتابٌ)، أل التعريف (الكتاب)، حروف الجر (في المدرسة)، الإسناد إليه.</div></div>
+<div class="explain-block"><div class="explain-head">🔵 المعرفة والنكرة</div><div class="explain-body"><strong>النكرة:</strong> اسم غير معروف بعينه → كتابٌ، طالبٌ<br><strong>المعرفة:</strong> اسم معروف بعينه → الكتابُ، أحمدُ، هو، هذا</div><div class="examples-row"><span class="example-pill">كتابٌ</span><span class="example-pill">الكتابُ</span><span class="example-pill">أحمدُ</span><span class="example-pill">هذا</span></div></div>
+<div class="explain-block"><div class="explain-head">🟣 المذكر والمؤنث</div><div class="explain-body">المؤنث: ما دلّ على أنثى أو لحقته تاء التأنيث أو ألف التأنيث.<br>مدرسة، سلمى، شجرة، بيضاء</div></div>
+<div class="tip-box"><span class="tip-icon">💡</span><span class="tip-text">كل اسم فيه (ة) هو <strong>مؤنث</strong> حتمًا. لكن بعض المؤنثات بلا تاء: أرض، شمس، نار.</span></div>`},
+  // lesson 2 — week 3 — الجملة والإعراب
+  {title:'📐 القواعد: الجملة والإعراب', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">الجملةُ الاسميةُ: مبتدأٌ + خبرٌ<br>الجملةُ الفعليةُ: فعلٌ + فاعلٌ</div></div>
+<div class="explain-block"><div class="explain-head">📗 المبتدأ والخبر</div><div class="explain-body"><strong>المبتدأ:</strong> ما يُبدأ به الكلام، مرفوع دائمًا.<br><strong>الخبر:</strong> ما يُخبر به عن المبتدأ، مرفوع دائمًا.<br>مثال: <strong>الجوُّ</strong> [مبتدأ] <strong>جميلٌ</strong> [خبر]</div></div>
+<div class="explain-block"><div class="explain-head">📘 الفاعل والمفعول به</div><div class="explain-body"><strong>الفاعل:</strong> من قام بالفعل ← مرفوع<br><strong>المفعول به:</strong> من وقع عليه الفعل ← منصوب<br>كَتَبَ <strong>أحمدُ</strong> الدرسَ<br>[أحمدُ: فاعل مرفوع / الدرسَ: مفعول به منصوب]</div></div>
+<div class="tip-box"><span class="tip-icon">💡</span><span class="tip-text">لإيجاد الفاعل: اسأل "من فعل؟" → المرفوع بعد الفعل.<br>لإيجاد المفعول: اسأل "ماذا فعل؟" → المنصوب.</span></div>`},
+  // lesson 3 — week 4 — التشبيه
+  {title:'📐 القواعد: الأساليب البلاغية', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">التشبيهُ: تشبيهُ شيءٍ بشيءٍ آخرَ في صفةٍ مشتركةٍ</div></div>
+<div class="explain-block"><div class="explain-head">🌟 أركان التشبيه الأربعة</div><div class="explain-body"><strong>المشبَّه:</strong> الشيء المراد تشبيهه<br><strong>المشبَّه به:</strong> الشيء الذي يُشبَّه به<br><strong>أداة التشبيه:</strong> كـ، مثل، كأن، يشبه...<br><strong>وجه الشبه:</strong> الصفة المشتركة<br><br>مثال: <strong>العلمُ</strong> [م] <strong>كـ</strong>[أداة] <strong>النور</strong>[م.به] في الهداية[وجه الشبه]</div></div>
+<div class="explain-block"><div class="explain-head">✏️ أمثلة</div><div class="explain-body">• الولدُ كالأسدِ شجاعةً<br>• وجهها مثل القمر إشراقًا<br>• كأنَّ الليلَ بحرٌ من الظلام</div></div>`},
+  // lesson 4 — week 5 — الإملاء (تحت قواعد)
+  {title:'📐 القواعد: حروف الجر', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">حروفُ الجرِّ تجرُّ الاسمَ الذي بعدها فتكسره</div></div>
+<div class="explain-block"><div class="explain-head">📋 أهم حروف الجر ومعانيها</div><div class="explain-body"><strong>مِنْ</strong>: للابتداء — سافرتُ مِن بيروت<br><strong>إلى</strong>: للانتهاء — وصلتُ إلى المدرسةِ<br><strong>عَنْ</strong>: للمجاوزة — ابتعدتُ عَن الشرِّ<br><strong>عَلى</strong>: للاستعلاء — وضعتُ الكتابَ على الطاولةِ<br><strong>في</strong>: للظرفية — درستُ في البيتِ<br><strong>الباء</strong>: للإلصاق — كتبتُ بالقلمِ<br><strong>اللام</strong>: للملك — الكتابُ لأحمدَ</div></div>
+<div class="tip-box"><span class="tip-icon">💡</span><span class="tip-text">بعد حرف الجر دائمًا كسرة: ذهبتُ إلى المدرسة<strong>ِ</strong>، في البيت<strong>ِ</strong></span></div>`},
+  // lesson 5 — week 6 — التعبير
+  {title:'📐 القواعد: أساليب الإنشاء', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">الأسلوبُ الإنشائيُّ: لا يحتملُ الصدقَ أو الكذبَ</div></div>
+<div class="explain-block"><div class="explain-head">❓ الاستفهام</div><div class="explain-body">أدواته: هل، من، ما، ماذا، متى، أين، كيف، كم، لماذا، أيّ<br><strong>مثال:</strong> هل درستَ؟ / أين كتابُكَ؟</div></div>
+<div class="explain-block"><div class="explain-head">📣 النداء</div><div class="explain-body">أدواته: يا، أيا، هيا، أي، آ<br><strong>مثال:</strong> يا أحمدُ / يا طلابَ الصف الخامس</div></div>
+<div class="explain-block"><div class="explain-head">🚫 الأمر والنهي</div><div class="explain-body"><strong>الأمر:</strong> اُدرسْ / اِقرأْ / كُنْ مجتهدًا<br><strong>النهي:</strong> لا تكسلْ / لا تضيّعْ وقتَكَ</div></div>`},
+  // lesson 6 — week 7 — التوكيد
+  {title:'📐 القواعد: التوكيد والاستثناء', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">التوكيدُ: تقويةُ المعنى وإزالةُ الشكِّ عن ذهنِ السامعِ</div></div>
+<div class="explain-block"><div class="explain-head">✅ التوكيد اللفظي</div><div class="explain-body">تكرار اللفظ بعينه:<br><strong>جاء جاءَ أحمدُ</strong> / <strong>نعم نعم سأذهبُ</strong></div></div>
+<div class="explain-block"><div class="explain-head">✅ التوكيد المعنوي</div><div class="explain-body">بألفاظ مخصوصة: نفسُه، عينُه، كلاهما، كلتاهما، كلُّهم<br><strong>جاء أحمدُ نفسُهُ</strong><br><strong>جاء الطلابُ كلُّهم</strong></div></div>
+<div class="explain-block"><div class="explain-head">🔁 الاستثناء بـ"إلا"</div><div class="explain-body">إخراج اسم من حكم عام:<br><strong>جاء الطلابُ إلا أحمدَ</strong> (أحمدَ: مستثنى منصوب)</div></div>`},
+  // lesson 7 — week 8 — الشعر
+  {title:'📐 القواعد: الميزان الصرفي', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">كلُّ فعلٍ ثلاثيٍّ يُقاسُ على: فَعَلَ (ف.ع.ل)</div></div>
+<div class="explain-block"><div class="explain-head">⚖️ الميزان الصرفي</div><div class="explain-body">الميزان ثلاثي الأحرف: الفاء والعين واللام<br><strong>كَتَبَ</strong> → وزنه <strong>فَعَلَ</strong> (ك=ف، ت=ع، ب=ل)<br><strong>عَلِمَ</strong> → وزنه <strong>فَعِلَ</strong><br><strong>كَرُمَ</strong> → وزنه <strong>فَعُلَ</strong></div></div>
+<div class="explain-block"><div class="explain-head">📊 أوزان المضارع</div><div class="explain-body">يَكْتُبُ → يَفْعُلُ<br>يَعْلَمُ → يَفْعَلُ<br>يَكْرُمُ → يَفْعُلُ</div></div>
+<div class="tip-box"><span class="tip-icon">💡</span><span class="tip-text">الميزان الصرفي يساعدنا على فهم بنية الكلمة واشتقاق معناها.</span></div>`},
+  // lesson 8 — week 9 — مراجعة
+  {title:'📐 مراجعة نهائية: القواعد', html:`
+<div class="rule-box"><div class="rule-title">ملخص القواعد</div><div class="rule-text">الفعل + الاسم + الحرف = أقسام الكلام</div></div>
+<div class="explain-block"><div class="explain-head">📋 ملخص سريع</div><div class="explain-body"><strong>الفعل:</strong> ماضٍ / مضارع / أمر<br><strong>الاسم:</strong> معرفة / نكرة / مذكر / مؤنث / مفرد / مثنى / جمع<br><strong>الجملة الاسمية:</strong> مبتدأ [م] + خبر [م]<br><strong>الجملة الفعلية:</strong> فعل + فاعل [م] + م.به [ن]<br><strong>حروف الجر:</strong> تجرّ ما بعدها<br><strong>الأساليب:</strong> استفهام / نداء / أمر / نهي / توكيد / استثناء</div></div>
+<div class="tip-box"><span class="tip-icon">🏆</span><span class="tip-text">أنجزت رحلتك! راجع هذا الملخص قبل الاختبار النهائي.</span></div>`},
+],
+
+qiraah: [
+{title:'📖 القراءة: الطالب المجتهد', html:`
+<div class="explain-head" style="font-size:16px;margin-bottom:10px;color:var(--gold-light);">📝 نص القراءة</div>
+<div class="passage-box"><p>كانَ <span class="highlight">أحمدُ</span> طالبًا مجتهدًا، يُحبُّ العلمَ ويسعى إلى التفوّق. كلَّ يومٍ <span class="highlight">يستيقظُ</span> باكرًا، ويُراجعُ دروسَهُ بعنايةٍ واهتمام.<br><br>قالَ مُعلّمُهُ يومًا: "إنَّ النجاحَ ثمرةُ الجدِّ والاجتهاد." فأخذَ أحمدُ هذه الكلماتِ دستورًا لحياتِهِ.</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="section-title" style="padding:0;">مفردات جديدة</div>
+<div class="vocab-scroll"><div class="vocab-card"><span class="vocab-ar">مُجتهد</span><span class="vocab-mean">يبذل جهدًا كبيرًا</span></div><div class="vocab-card"><span class="vocab-ar">التفوّق</span><span class="vocab-mean">الحصول على مرتبة عالية</span></div><div class="vocab-card"><span class="vocab-ar">باكرًا</span><span class="vocab-mean">في وقت مبكر</span></div><div class="vocab-card"><span class="vocab-ar">ثمرة</span><span class="vocab-mean">نتيجة، ما ينتج</span></div><div class="vocab-card"><span class="vocab-ar">دستور</span><span class="vocab-mean">قانون، قاعدة ثابتة</span></div></div>
+<div class="explain-block"><div class="explain-head">🤔 أسئلة الفهم</div><div class="explain-body">١. مَن بطل النص؟ ما صفاته؟<br><br>٢. ما الذي يفعله أحمد كل يوم؟<br><br>٣. ماذا قال المعلم؟ بأسلوبك الخاص.<br><br>٤. ما الفكرة الرئيسية في جملة واحدة؟</div></div>
+<div class="tip-box"><span class="tip-icon">🎯</span><span class="tip-text">حدّد الأفعال في النص وبيّن نوع كل منها: ماضٍ أم مضارع.</span></div>`},
+
+{title:'📖 القراءة: الربيع في لبنان', html:`
+<div class="passage-box"><p>تَجلَّى الربيعُ في لبنانَ <span class="highlight">بأبهى</span> صوره. تفتّحتِ الأزهارُ في الوديانِ والجبالِ، وعاد الطيرُ يُنشدُ أجملَ أغانيهِ. قالَ الشاعرُ: "لبنانُ بلادُ الأرزِ والجمالِ، تتغنّى بها الأجيالُ جيلًا بعدَ جيل."</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="vocab-scroll"><div class="vocab-card"><span class="vocab-ar">تجلّى</span><span class="vocab-mean">ظهر بوضوح</span></div><div class="vocab-card"><span class="vocab-ar">أبهى</span><span class="vocab-mean">أجمل وأكثر بهاءً</span></div><div class="vocab-card"><span class="vocab-ar">تفتّحت</span><span class="vocab-mean">فتحت أزهارها</span></div><div class="vocab-card"><span class="vocab-ar">يُنشد</span><span class="vocab-mean">يُغنّي ويُردد</span></div></div>
+<div class="explain-block"><div class="explain-head">🤔 أسئلة</div><div class="explain-body">١. صِف الربيع في لبنان بكلماتك.<br><br>٢. ما الصورة البيانية في قول الشاعر؟<br><br>٣. ما جمع كلمة "جيل"؟<br><br>٤. أعرب كلمة "الربيعُ" في الجملة الأولى.</div></div>`},
+
+{title:'📖 القراءة: الأم', html:`
+<div class="passage-box"><p>الأمُّ <span class="highlight">كنزٌ</span> لا يُقدَّرُ بثمن. هي التي سهرتْ على رأسكَ وأنتَ مريض، وضحكتْ لبسمتِكَ وبكتْ لحزنِكَ. كلُّ حرفٍ تعلّمتَهُ فيه شيءٌ من تعبِها ومحبّتِها.</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="vocab-scroll"><div class="vocab-card"><span class="vocab-ar">كنز</span><span class="vocab-mean">شيء ثمين جداً</span></div><div class="vocab-card"><span class="vocab-ar">يُقدَّر</span><span class="vocab-mean">يُحدَّد ثمنه</span></div><div class="vocab-card"><span class="vocab-ar">سهرتْ</span><span class="vocab-mean">بقيت مستيقظة</span></div><div class="vocab-card"><span class="vocab-ar">بسمة</span><span class="vocab-mean">ابتسامة خفيفة</span></div></div>
+<div class="explain-block"><div class="explain-head">🤔 أسئلة</div><div class="explain-body">١. ما الاستعارة في الجملة الأولى؟<br><br>٢. ما مضاد كلمة "سهرتْ"؟<br><br>٣. بأسلوبك، اكتب جملتين عن الأم.<br><br>٤. ما الفكرة الرئيسية للنص؟</div></div>`},
+
+{title:'📖 القراءة: الماء والحياة', html:`
+<div class="passage-box"><p><span class="highlight">الماءُ</span> أصلُ الحياةِ. قالَ اللهُ تعالى: "وجعلنا من الماءِ كلَّ شيءٍ حيّ". بالماءِ تَنبُتُ الزروعُ، وتحيا الأحياءُ، ويعمرُ الكونُ. <span class="highlight">فاحترامُ الماءِ</span> واجبٌ على كلِّ إنسان.</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="vocab-scroll"><div class="vocab-card"><span class="vocab-ar">تَنبُت</span><span class="vocab-mean">تخرج من الأرض</span></div><div class="vocab-card"><span class="vocab-ar">الزروع</span><span class="vocab-mean">النباتات المزروعة</span></div><div class="vocab-card"><span class="vocab-ar">يعمر</span><span class="vocab-mean">يصبح مسكونًا وحيًا</span></div><div class="vocab-card"><span class="vocab-ar">واجب</span><span class="vocab-mean">لازم، فرض</span></div></div>
+<div class="explain-block"><div class="explain-head">🤔 أسئلة</div><div class="explain-body">١. لماذا الماء أصل الحياة؟<br><br>٢. استخرج فعلاً مضارعًا من النص.<br><br>٣. اكتب ثلاث طرق للمحافظة على الماء.</div></div>`},
+
+{title:'📖 القراءة: المعلم الفاضل', html:`
+<div class="passage-box"><p>المعلّمُ <span class="highlight">شمعةٌ</span> تحترقُ لتُضيءَ الآخرين. يبذلُ جُهدَهُ كلَّ يومٍ لينقلَ العلمَ إلى عقولِ التلاميذِ وقلوبِهم. <span class="highlight">قيلَ قديمًا</span>: "قِفْ للمعلِّمِ وفِّهِ التبجيلا / كادَ المعلِّمُ أن يكونَ رسولا".</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="vocab-scroll"><div class="vocab-card"><span class="vocab-ar">شمعة</span><span class="vocab-mean">تُضيء في الظلام</span></div><div class="vocab-card"><span class="vocab-ar">التبجيل</span><span class="vocab-mean">الاحترام الشديد</span></div><div class="vocab-card"><span class="vocab-ar">يبذل</span><span class="vocab-mean">يُقدّم، يُعطي</span></div><div class="vocab-card"><span class="vocab-ar">ينقل</span><span class="vocab-mean">يُحوّل من مكان لآخر</span></div></div>
+<div class="explain-block"><div class="explain-head">🤔 أسئلة</div><div class="explain-body">١. ما وجه الشبه بين المعلم والشمعة؟<br><br>٢. ما نوع الأسلوب في "قِفْ للمعلم"؟<br><br>٣. اكتب فقرة قصيرة عن معلمك المفضل.</div></div>`},
+
+{title:'📖 القراءة: الوقت ذهب', html:`
+<div class="passage-box"><p><span class="highlight">الوقتُ</span> أغلى ما يملكُ الإنسان. ساعةٌ ضائعةٌ لا تعود، وعمرٌ مهدَرٌ لا يُستردُّ. قالَ الشاعرُ: "اِغتنمْ في الفراغِ فضلَ ركوعٍ / فعسى أن يكونَ موتُكَ بَغتَه".</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="vocab-scroll"><div class="vocab-card"><span class="vocab-ar">مهدَر</span><span class="vocab-mean">مُضيَّع، لم يُستفَد منه</span></div><div class="vocab-card"><span class="vocab-ar">يُستردّ</span><span class="vocab-mean">يرجع، يُستعاد</span></div><div class="vocab-card"><span class="vocab-ar">اغتنِم</span><span class="vocab-mean">استفِد واحرص</span></div><div class="vocab-card"><span class="vocab-ar">بَغتة</span><span class="vocab-mean">فجأة، دون مقدمات</span></div></div>
+<div class="explain-block"><div class="explain-head">🤔 أسئلة</div><div class="explain-body">١. لماذا الوقت أغلى ما يملكه الإنسان؟<br><br>٢. كيف تستثمر وقتك في المذاكرة؟<br><br>٣. ما نوع أسلوب "اغتنم"؟</div></div>`},
+
+{title:'📖 القراءة: الشجرة والنهر', html:`
+<div class="passage-box"><p>على ضفافِ النهرِ <span class="highlight">الهادئِ</span>، كانتْ شجرةُ أرزٍ باسقةٌ تُطلُّ على المياهِ الصافيةِ. حدَّثتِ الشجرةُ النهرَ: "كم من أجيالٍ شهدنا معًا!" فأجابَ النهرُ: "والأجيالُ القادمةُ بحاجةٍ إلينا."</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="vocab-scroll"><div class="vocab-card"><span class="vocab-ar">ضِفاف</span><span class="vocab-mean">جمع ضِفّة: جانب النهر</span></div><div class="vocab-card"><span class="vocab-ar">باسقة</span><span class="vocab-mean">طويلة شاهقة</span></div><div class="vocab-card"><span class="vocab-ar">تُطلّ</span><span class="vocab-mean">تنظر من علٍ</span></div><div class="vocab-card"><span class="vocab-ar">الصافية</span><span class="vocab-mean">النقية الصافية</span></div></div>
+<div class="explain-block"><div class="explain-head">🤔 أسئلة</div><div class="explain-body">١. أين تقع هذه الشجرة؟<br><br>٢. ما نوع الأسلوب في هذا النص (وصفي/سردي/حجاجي)؟<br><br>٣. ما الفكرة الرئيسية للنص؟</div></div>`},
+
+{title:'📖 مراجعة نهائية: القراءة', html:`
+<div class="passage-box"><p><span class="highlight">العلمُ</span> نورٌ يُضيءُ طريقَ الإنسانِ في ظلمةِ الجهلِ. بالعلمِ <span class="highlight">ارتقتِ</span> الأممُ وتقدَّمتِ الحضارات. اقرأْ يا بنيَّ كلَّ يومٍ، ولا تضعْ في يدِكَ إلا القلمَ فهو سيفُ العقلاء.</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="vocab-scroll"><div class="vocab-card"><span class="vocab-ar">ارتقتْ</span><span class="vocab-mean">صعدت، تقدمت</span></div><div class="vocab-card"><span class="vocab-ar">الأمم</span><span class="vocab-mean">جمع أمة: الشعوب</span></div><div class="vocab-card"><span class="vocab-ar">الحضارات</span><span class="vocab-mean">جمع حضارة</span></div><div class="vocab-card"><span class="vocab-ar">العقلاء</span><span class="vocab-mean">جمع عاقل</span></div></div>
+<div class="explain-block"><div class="explain-head">📝 أسئلة المراجعة</div><div class="explain-body">١. ما الاستعارة في "العلم نور"؟<br><br>٢. استخرج فعل أمر من النص.<br><br>٣. ما نوع الجملة "العلمُ نورٌ"؟<br><br>٤. اكتب الفكرة الرئيسية.</div></div>`},
+
+{title:'📖 نص الختام: إنجازك يتحدث', html:`
+<div class="passage-box"><p>يا طالبًا أنهى ستين يومًا من التعلم، <span class="highlight">أنتَ اليومَ</span> أكثرُ معرفةً وأعمقُ فهمًا. ما من شيءٍ جميلٍ إلا وله ثمن، وثمنُ هذا الإنجازِ كانَ مثابرتُكَ كلَّ يومٍ. استمرَّ على هذا الطريق.</p><button class="tts-btn" onclick="speakText(this)">🔊</button></div>
+<div class="explain-block"><div class="explain-head">🏆 تأمّل معي</div><div class="explain-body">١. ما المفردات الجديدة التي تعلمتها هذه الأيام؟<br><br>٢. ما القاعدة النحوية الأصعب التي أتقنتها؟<br><br>٣. اكتب فقرة تصف فيها رحلتك مع اللغة العربية.</div></div>`},
+],
+
+imla: [
+{title:'✏️ الإملاء: التاء المربوطة', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">التاء المربوطة (ة) في آخر الاسم المؤنث — تُنطق هاءً عند الوقف</div></div>
+<div class="explain-block"><div class="explain-head">📌 متى نكتب التاء المربوطة؟</div><div class="explain-body">١. في الاسم المؤنث: مدرسَ<strong>ة</strong>، طالبَ<strong>ة</strong><br>٢. في جمع التكسير: طَلَبَ<strong>ة</strong>، أسَرَ<strong>ة</strong><br>٣. في صفة المذكر غير العاقل: رحل<strong>ة</strong></div><div class="examples-row"><span class="example-pill">مدرسة</span><span class="example-pill">حقيبة</span><span class="example-pill">سيارة</span><span class="example-pill">طلبة</span></div></div>
+<div class="section-title" style="padding:0">تمرين</div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">١. هذه الـ... واسعة (غرفه/غرفة)</div><input class="imla-input" placeholder="اكتب..." id="imla1" oninput="checkImla(this,'غرفة')"><div class="feedback-banner" id="fb-imla1"></div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">٢. قرأتُ قصـ... ممتعة (قصه/قصة)</div><input class="imla-input" placeholder="اكتب..." id="imla2" oninput="checkImla(this,'قصة')"><div class="feedback-banner" id="fb-imla2"></div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">٣. الشجر... جميلة (الشجره/الشجرة)</div><input class="imla-input" placeholder="اكتب..." id="imla3" oninput="checkImla(this,'الشجرة')"><div class="feedback-banner" id="fb-imla3"></div></div>
+<div class="tip-box"><span class="tip-icon">🔑</span><span class="tip-text">عند الوقف: انطق التاء المربوطة <strong>هاء</strong>: مدرسه. في الوصل: انطقها <strong>تاء</strong>.</span></div>`},
+
+{title:'✏️ الإملاء: الهمزة في أول الكلمة', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">همزة الوصل تُحذف في الوصل — همزة القطع تثبت دائمًا</div></div>
+<div class="explain-block"><div class="explain-head">🔗 همزة الوصل</div><div class="explain-body">تُكتب ألفًا بلا همزة: اِذهبْ، اِكتبْ، اِستمعْ<br>تُحذف نطقًا في الوصل: ذَهَبتُ إلى <strong>البيت</strong> (لا تنطق الهمزة)</div><div class="examples-row"><span class="example-pill">اِذهب</span><span class="example-pill">الكتاب</span><span class="example-pill">اِستمع</span></div></div>
+<div class="explain-block"><div class="explain-head">✂️ همزة القطع</div><div class="explain-body">تُكتب بهمزة فوق الألف أو تحتها وتثبت دائمًا:<br>أَكَلَ، إنَّ، أُستاذ، إسلام</div><div class="examples-row"><span class="example-pill">أَكَلَ</span><span class="example-pill">إنَّ</span><span class="example-pill">أُستاذ</span></div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">١. همزة في "أكل" من نوع:</div><input class="imla-input" placeholder="وصل أم قطع؟" id="imla1" oninput="checkImla(this,'قطع')"><div class="feedback-banner" id="fb-imla1"></div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">٢. همزة في "اكتب" من نوع:</div><input class="imla-input" placeholder="وصل أم قطع؟" id="imla2" oninput="checkImla(this,'وصل')"><div class="feedback-banner" id="fb-imla2"></div></div>`},
+
+{title:'✏️ الإملاء: الهمزة المتوسطة', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">تُكتب الهمزة المتوسطة على الحرف الأقوى من حركتها والحركة السابقة لها</div></div>
+<div class="explain-block"><div class="explain-head">📊 جدول القوة</div><div class="explain-body">الياء أقوى من الواو أقوى من الألف أقوى من السكون<br><strong>سُئِلَ</strong> (حركة الهمزة: كسرة → على الياء: سُئِلَ)<br><strong>يَأْكُلُ</strong> (حركة قبلها: فتح → على الألف)<br><strong>يَؤُمُّ</strong> (حركة قبلها: فتح، الهمزة ضمة → على الواو)</div><div class="examples-row"><span class="example-pill">سُئِلَ</span><span class="example-pill">يَأْكُلُ</span><span class="example-pill">رَئِيس</span><span class="example-pill">مَسْأَلة</span></div></div>`},
+
+{title:'✏️ الإملاء: الألف اللينة', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">الألف المقصورة (ى) في آخر الكلمة من أصل ياء أو في الأسماء الأعجمية</div></div>
+<div class="explain-block"><div class="explain-head">📌 متى نكتب ألفًا مقصورة (ى)؟</div><div class="explain-body">في الفعل الثلاثي المعتل الآخر: رمى، هدى، سعى<br>في بعض الأسماء: يحيى، موسى، عيسى، سلمى</div><div class="examples-row"><span class="example-pill">رمى</span><span class="example-pill">هدى</span><span class="example-pill">سعى</span><span class="example-pill">موسى</span></div></div>
+<div class="explain-block"><div class="explain-head">📌 متى نكتب ألفًا ممدودة (ا)؟</div><div class="explain-body">في الفعل الرباعي فأكثر: أعطى، استدعى<br>في غير ذلك: الدنيا، الفتى، الهوى</div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">١. الفعل "سعى" ألفه مقصورة أم ممدودة؟</div><input class="imla-input" placeholder="اكتب..." id="imla1" oninput="checkImla(this,'مقصورة')"><div class="feedback-banner" id="fb-imla1"></div></div>`},
+
+{title:'✏️ الإملاء: حروف تُشابه', html:`
+<div class="rule-box"><div class="rule-title">حروف دقيقة</div><div class="rule-text">الضاد (ض) والظاء (ظ) — الثاء (ث) والسين (س) — الذال (ذ) والزاي (ز)</div></div>
+<div class="explain-block"><div class="explain-head">ض مقابل ظ</div><div class="explain-body"><strong>الضاد:</strong> ضَرَبَ، رَوْضة، فَرَضَ، مَرِيض<br><strong>الظاء:</strong> ظَلَمَ، حَظَّ، نَظَرَ، حَفِيظ</div><div class="examples-row"><span class="example-pill">ضرب</span><span class="example-pill">ظلم</span><span class="example-pill">مريض</span><span class="example-pill">حفيظ</span></div></div>
+<div class="explain-block"><div class="explain-head">ث مقابل س</div><div class="explain-body"><strong>الثاء:</strong> ثَلاثة، مَثَل، حَدِيث<br><strong>السين:</strong> سَبعة، مَسجد، أُسلوب</div></div>`},
+
+{title:'✏️ الإملاء: الشدة والمد', html:`
+<div class="rule-box"><div class="rule-title">القاعدة</div><div class="rule-text">الشدة: حرف مضعَّف = حرفان (ساكن + متحرك)<br>المد: مطّ الصوت بحرف المد (ا، و، ي)</div></div>
+<div class="explain-block"><div class="explain-head">🔴 الشدة</div><div class="explain-body">كَرَّ (ر مشددة = رر)، مَدَّ، حَبَّ، قَلَّ<br>لا تكتب حرفين، بل حرف واحد فوقه شدة.</div><div class="examples-row"><span class="example-pill">مدَّ</span><span class="example-pill">كرَّ</span><span class="example-pill">قلَّ</span><span class="example-pill">صفَّ</span></div></div>
+<div class="explain-block"><div class="explain-head">🔵 المد بأنواعه</div><div class="explain-body">مد طبيعي: ذهَب → ذاهب (مدّ الألف)<br>مد الواو: يقول، حول<br>مد الياء: بيت، ليل</div></div>`},
+
+{title:'✏️ الإملاء: مراجعة شاملة', html:`
+<div class="rule-box"><div class="rule-title">ملخص الإملاء</div><div class="rule-text">راجع القواعد الأساسية قبل الاختبار النهائي</div></div>
+<div class="explain-block"><div class="explain-head">📋 ملخص سريع</div><div class="explain-body"><strong>التاء المربوطة (ة):</strong> اسم مؤنث / جمع تكسير<br><strong>همزة الوصل:</strong> في الأمر الثلاثي، في أل التعريف<br><strong>همزة القطع:</strong> في المضارع المبدوء بهمزة وفي (إنَّ، إذا، أنَّ)<br><strong>ألف مقصورة:</strong> رمى، سعى، موسى<br><strong>ألف ممدودة:</strong> غير ما سبق</div></div>
+<div style="margin-bottom:10px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">اكتب كلمة فيها تاء مربوطة:</div><input class="imla-input" placeholder="اكتب كلمة..." id="imla1"><div class="feedback-banner" id="fb-imla1"></div></div>
+<div class="tip-box"><span class="tip-icon">🏆</span><span class="tip-text">تهانينا! أتقنت قواعد الإملاء الأساسية للصف الخامس.</span></div>`},
+
+{title:'✏️ الإملاء النهائي', html:`
+<div class="rule-box"><div class="rule-title">تمرين شامل</div><div class="rule-text">اختبر نفسك في جميع قواعد الإملاء</div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">١. اكتب جمع (طالب) بالتاء المربوطة:</div><input class="imla-input" placeholder="..." id="imla1" oninput="checkImla(this,'طلبة')"><div class="feedback-banner" id="fb-imla1"></div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">٢. نوع همزة "أَخَذَ":</div><input class="imla-input" placeholder="وصل أم قطع؟" id="imla2" oninput="checkImla(this,'قطع')"><div class="feedback-banner" id="fb-imla2"></div></div>
+<div style="margin-bottom:12px;"><div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;">٣. الفعل الثلاثي "رمى" ألفه:</div><input class="imla-input" placeholder="..." id="imla3" oninput="checkImla(this,'مقصورة')"><div class="feedback-banner" id="fb-imla3"></div></div>
+<div class="tip-box"><span class="tip-icon">🌟</span><span class="tip-text">أنت الآن تتقن الإملاء على مستوى الصف الخامس. استمر!</span></div>`},
+
+{title:'✏️ إملاء: الختام', html:`
+<div class="rule-box"><div class="rule-title">الإنجاز</div><div class="rule-text">لقد أتممت ٦٠ يومًا من التدريب على اللغة العربية!</div></div>
+<div class="explain-block"><div class="explain-head">🏆 ما أنجزته</div><div class="explain-body">✅ أتقنت التاء المربوطة والهاء<br>✅ فهمت الهمزات وأنواعها<br>✅ عرفت الألف اللينة بنوعيها<br>✅ تدربت على الحروف المتشابهة<br>✅ طبّقت قواعد الشدة والمد</div></div>
+<div class="tip-box"><span class="tip-icon">🎉</span><span class="tip-text">مبارك لك هذا الإنجاز الرائع! أنت الآن مستعد لاختبارات الصف الخامس.</span></div>`},
+],
+
+taabir: [
+{title:'🖊️ التعبير: الفقرة', html:`
+<div class="rule-box"><div class="rule-title">درس اليوم</div><div class="rule-text">الفقرة = مقدمة + عرض + خاتمة</div></div>
+<div class="explain-block"><div class="explain-head">🏗️ بناء الفقرة</div><div class="explain-body"><strong>المقدمة:</strong> جملة تجذب القارئ وتُعرّف الموضوع.<br><strong>العرض:</strong> ٣-٤ جمل تشرح وتدعم بأمثلة.<br><strong>الخاتمة:</strong> تلخّص أو تدعو إلى موقف.</div></div>
+<div class="explain-block"><div class="explain-head">✍️ مثال: أهمية القراءة</div><div class="explain-body"><strong>م:</strong> القراءة نور العقول وزاد الأرواح.<br><strong>ع:</strong> بالقراءة نتعلم ونتطور. يقول أهل الحكمة: "اقرأ وارتقِ". كل كتاب يفتح لنا أفقًا جديدًا.<br><strong>خ:</strong> لذا، احرص على القراءة يوميًا فهي طريقك إلى النجاح.</div></div>
+<input class="imla-input" placeholder="اكتب فقرة عن: صديقي المفضل..." style="min-height:110px;">
+<div class="examples-row" style="margin-top:8px;"><span class="example-pill">بالإضافة إلى</span><span class="example-pill">لذلك</span><span class="example-pill">في الختام</span><span class="example-pill">كما أنّ</span></div>`},
+
+{title:'🖊️ التعبير الوصفي', html:`
+<div class="rule-box"><div class="rule-title">درس اليوم</div><div class="rule-text">الوصف: رسم الصورة بالكلمات باستخدام الحواس</div></div>
+<div class="explain-block"><div class="explain-head">🎨 عناصر الوصف الجيد</div><div class="explain-body">✅ استخدم الصفات: كبير، هادئ، عطري<br>✅ اذكر الألوان والأشكال والأصوات<br>✅ استخدم التشبيه: كـ، مثل، كأن<br>✅ رتّب الوصف من الكل إلى الجزء</div></div>
+<div class="explain-block"><div class="explain-head">✍️ مثال: وصف الربيع</div><div class="explain-body">يأتي الربيعُ كالعريسِ في أبهى حلله. تتزيّن الأرضُ بالأزهار البيضاء والصفراء، ويملأ الهواءُ عطرٌ يشرح الصدور. الطيورُ تُغرّد فوق الأشجار كأنها تُعزف لحنًا جميلًا.</div></div>
+<input class="imla-input" placeholder="صِف: غرفة الصف أو حديقة البيت..." style="min-height:110px;">`},
+
+{title:'🖊️ التعبير السردي', html:`
+<div class="rule-box"><div class="rule-title">درس اليوم</div><div class="rule-text">السرد: حكاية أحداث بترتيب زمني منطقي</div></div>
+<div class="explain-block"><div class="explain-head">📅 خطوات السرد</div><div class="explain-body">١. <strong>التعريف بالشخصيات</strong>: من؟<br>٢. <strong>تحديد الزمان والمكان</strong>: متى؟ أين؟<br>٣. <strong>سرد الأحداث</strong>: ماذا جرى؟<br>٤. <strong>الخاتمة</strong>: كيف انتهت القصة؟</div></div>
+<div class="explain-block"><div class="explain-head">🔗 روابط زمنية مفيدة</div><div class="explain-body">ذاتَ يومٍ — ثُمَّ — بعدَ ذلك — فجأةً — في الأخير</div></div>
+<input class="imla-input" placeholder="اكتب قصة قصيرة عن: موقف لا تنساه..." style="min-height:120px;">`},
+
+{title:'🖊️ التعبير عن الرأي', html:`
+<div class="rule-box"><div class="rule-title">درس اليوم</div><div class="rule-text">الرأي: عرض فكرة + دليل + ردّ على الاعتراض</div></div>
+<div class="explain-block"><div class="explain-head">🗣️ كيف تعبّر عن رأيك؟</div><div class="explain-body"><strong>أرى أنّ:</strong> أُعلن موقفك بوضوح<br><strong>لأنّ:</strong> أذكر دليلًا أو سببًا<br><strong>وعلى الرغم من:</strong> أعترف بوجهة النظر الأخرى<br><strong>إلا أنّ:</strong> تدحض الاعتراض</div></div>
+<div class="explain-block"><div class="explain-head">✍️ مثال</div><div class="explain-body">أرى <strong>أنّ</strong> الرياضة ضرورية للطالب، <strong>لأنّها</strong> تُقوّي الجسم وتُصفّي الذهن. <strong>وعلى الرغم من</strong> أنها تأخذ وقتًا، <strong>إلا أنّ</strong> فوائدها تفوق أي اعتراض.</div></div>
+<input class="imla-input" placeholder="أعبّر عن رأيي في: الواجبات المدرسية..." style="min-height:110px;">`},
+
+{title:'🖊️ كتابة الرسالة', html:`
+<div class="rule-box"><div class="rule-title">درس اليوم</div><div class="rule-text">الرسالة الرسمية وغير الرسمية: شكل ومضمون</div></div>
+<div class="explain-block"><div class="explain-head">📮 شكل الرسالة الرسمية</div><div class="explain-body">المُرسِل والتاريخ (يمين أعلى)<br>المُرسَل إليه (يسار أعلى)<br>التحية: السيد المحترم / تحية طيبة وبعد<br>الموضوع: أكتب الطلب أو الموضوع<br>الختام: وتفضلوا بقبول فائق الاحترام<br>التوقيع</div></div>
+<div class="explain-block"><div class="explain-head">💌 الرسالة الغير رسمية</div><div class="explain-body">أخي الغالي / صديقي العزيز<br>مضمون أكثر حميمية وعفوية<br>الختام: مع أطيب التحيات / صديقك المخلص</div></div>
+<input class="imla-input" placeholder="اكتب رسالة إلى صديق تدعوه لزيارتك..." style="min-height:110px;">`},
+
+{title:'🖊️ فن التلخيص', html:`
+<div class="rule-box"><div class="rule-title">درس اليوم</div><div class="rule-text">التلخيص: الاحتفاظ بالجوهر وحذف التفاصيل</div></div>
+<div class="explain-block"><div class="explain-head">✂️ خطوات التلخيص</div><div class="explain-body">١. اقرأ النص مرتين<br>٢. ضع خطًا تحت الأفكار الرئيسية<br>٣. احذف الأمثلة والتفاصيل<br>٤. اكتب بأسلوبك الخاص<br>٥. النص الملخص = ثلث الأصل تقريبًا</div></div>
+<div class="passage-box"><p style="font-size:18px;">الصدقُ أساسُ كلِّ فضيلة. فالصادقُ محبوبٌ من الناسِ ومحترمٌ بينَهم، ويثقُ الجميعُ بكلامِهِ. أمّا الكاذبُ فمحتقَرٌ وإن أظهَرَ ثروةً أو جاهًا. فكُنْ صادقًا في كلِّ حالٍ.</p></div>
+<input class="imla-input" placeholder="لخّص هذا النص بجملتين فقط..." style="min-height:70px;">`},
+
+{title:'🖊️ التعبير الإبداعي', html:`
+<div class="rule-box"><div class="rule-title">درس اليوم</div><div class="rule-text">التعبير الإبداعي: أكتب ما تشعر به بحرية وصدق</div></div>
+<div class="explain-block"><div class="explain-head">✨ موضوعات للكتابة</div><div class="explain-body">اختر موضوعًا واكتب عنه ٥ جمل على الأقل:<br><br>🌊 وصفت البحر وأنت تنظر إليه<br>📚 تخيّل أنك معلم لطلاب الصف الأول<br>🌳 الشجرة التي غرستها جدّي وكبرتُ معها<br>✈️ لو سافرت إلى أي مكان في العالم</div></div>
+<input class="imla-input" placeholder="اكتب بحرية وإبداع..." style="min-height:130px;">`},
+
+{title:'🖊️ مراجعة التعبير', html:`
+<div class="rule-box"><div class="rule-title">مراجعة</div><div class="rule-text">أساليب التعبير الكتابي — ملخص شامل</div></div>
+<div class="explain-block"><div class="explain-head">📋 أنواع التعبير</div><div class="explain-body"><strong>الوصفي:</strong> رسم صورة بالكلمات<br><strong>السردي:</strong> حكاية أحداث بترتيب زمني<br><strong>الحجاجي:</strong> التعبير عن رأي بأدلة<br><strong>الرسالة:</strong> خطاب لشخص معين<br><strong>التلخيص:</strong> إعادة صياغة مكثفة<br><strong>الإبداعي:</strong> تعبير حر شخصي</div></div>
+<input class="imla-input" placeholder="اكتب نموذج تعبير من اختيارك..." style="min-height:110px;">`},
+
+{title:'🖊️ التعبير: الختام', html:`
+<div class="rule-box"><div class="rule-title">اليوم الختامي</div><div class="rule-text">🎉 أنهيت رحلة التعبير الكاملة!</div></div>
+<div class="explain-block"><div class="explain-head">🏆 ما أتقنته</div><div class="explain-body">✅ كتابة الفقرة المتكاملة (م+ع+خ)<br>✅ التعبير الوصفي بالحواس<br>✅ السرد الزمني المنطقي<br>✅ إبداء الرأي بأدلة<br>✅ كتابة الرسائل<br>✅ فن التلخيص<br>✅ التعبير الإبداعي الحر</div></div>
+<input class="imla-input" placeholder="اكتب رسالة شكر لنفسك على هذا الإنجاز..." style="min-height:110px;">`},
+],
+
+mahfuzat: [
+{title:'🌙 المحفوظات: يا وطني لبنان', html:`
+<div class="rule-box"><div class="rule-title">نشيد وطني</div><div class="rule-text" style="font-size:24px;line-height:2.2">يا وطني يا لبنانُ<br>أنتَ الجمالُ والبيانُ<br>في أرضِكَ السِّحرُ يسكنُ<br>وفي هوائِكَ نُحنُ</div></div>
+<div class="explain-block"><div class="explain-head">📖 شرح المفردات</div><div class="explain-body"><strong>البيان:</strong> الفصاحة والبلاغة<br><strong>السِّحر:</strong> الجمال الخلّاب<br><strong>يسكن:</strong> يقطن، يوجد</div></div>
+<div class="explain-block"><div class="explain-head">🎯 التحليل الأدبي</div><div class="explain-body">١. ما الغرض من هذه القصيدة؟<br>٢. استخرج نداءً من النص.<br>٣. ما الأفعال في القصيدة وما نوعها؟</div></div>`},
+
+{title:'🌙 المحفوظات: العلم نور', html:`
+<div class="rule-box"><div class="rule-title">حكمة</div><div class="rule-text" style="font-size:24px;line-height:2.2">العلمُ نورٌ والجهلُ ظلامُ<br>طالبُ العلمِ في الأنامِ<br>يحيا سعيدًا ذا مقامِ<br>وينالُ خيرَ المرامِ</div></div>
+<div class="explain-block"><div class="explain-head">📖 شرح</div><div class="explain-body"><strong>الأنام:</strong> الناس، الخلق<br><strong>المقام:</strong> المنزلة والمكانة<br><strong>المرام:</strong> ما يُرجى ويُؤمَّل</div></div>
+<div class="explain-block"><div class="explain-head">🎯 أسئلة</div><div class="explain-body">١. ما التشبيه في البيت الأول؟<br>٢. ما القافية في هذه الأبيات؟<br>٣. احفظ هذه الأبيات!</div></div>`},
+
+{title:'🌙 المحفوظات: أمثال عربية', html:`
+<div class="rule-box"><div class="rule-title">أمثال وحكم</div><div class="rule-text" style="font-size:22px;line-height:2">العقلُ زينةٌ والأدبُ مروءة<br>من جدَّ وجدَ ومن زرعَ حصدَ</div></div>
+<div class="explain-block"><div class="explain-head">📖 معاني الأمثال</div><div class="explain-body"><strong>"من جدَّ وجدَ":</strong> من اجتهد حقق هدفه<br><strong>"من زرع حصد":</strong> من عمل أخذ ثمار عمله<br><strong>المروءة:</strong> الشهامة والكرم</div></div>
+<div class="explain-block"><div class="explain-head">🎯 تطبيق</div><div class="explain-body">استخدم أحد هذه الأمثال في جملة من عندك.<br>ابحث عن مثل عربي آخر وشرح معناه.</div></div>`},
+
+{title:'🌙 قصيدة: مدح الأم', html:`
+<div class="rule-box"><div class="rule-title">شعر الأم</div><div class="rule-text" style="font-size:24px;line-height:2.2">أمّيَ يا جنَّةَ الدنيا ويا وطني<br>يا من سهرتِ الليالي في هواي<br>قلبُكِ بحرٌ من الحُبِّ الدفيق<br>في كلِّ ضمّةٍ حياةٌ وبريق</div></div>
+<div class="explain-block"><div class="explain-head">📖 تذوق الشعر</div><div class="explain-body"><strong>جنّة الدنيا:</strong> استعارة — شبّه الأم بالجنة<br><strong>قلبك بحر:</strong> استعارة — شبّه القلب بالبحر<br><strong>الدفيق:</strong> الفائض، المتدفق</div></div>
+<div class="explain-block"><div class="explain-head">🎯 أسئلة</div><div class="explain-body">١. استخرج صورتين بيانيتين.<br>٢. ما نوع أسلوب "يا من سهرتِ"؟<br>٣. اكتب بيتين من الشعر عن أمك.</div></div>`},
+
+{title:'🌙 نثر: وصايا لقمان', html:`
+<div class="rule-box"><div class="rule-title">حكمة لقمان</div><div class="rule-text" style="font-size:20px;line-height:2">"يا بنيَّ، لا تُشركْ باللهِ إنَّ الشِّركَ لظلمٌ عظيم. وأقِمِ الصلاة، وأمُرْ بالمعروفِ وانهَ عن المُنكر، واصبرْ على ما أصابكَ."</div></div>
+<div class="explain-block"><div class="explain-head">📖 شرح المفردات</div><div class="explain-body"><strong>المُنكر:</strong> ما تنكره الفطرة والشريعة<br><strong>أقِم:</strong> فعل أمر من "أقام"<br><strong>انهَ:</strong> فعل أمر من "نهى"</div></div>
+<div class="explain-block"><div class="explain-head">🎯 أسئلة</div><div class="explain-body">١. استخرج أفعال الأمر من هذا النص.<br>٢. ما الوصايا التي ذكرها لقمان؟<br>٣. ما الفكرة الرئيسية؟</div></div>`},
+
+{title:'🌙 أناشيد: الطفل العربي', html:`
+<div class="rule-box"><div class="rule-title">نشيد للأطفال</div><div class="rule-text" style="font-size:24px;line-height:2.2">أنا طفلٌ عربيٌّ<br>أتكلّمُ العربيّة<br>لغتي جميلةٌ حرّة<br>مثل الشمس الوضيّة</div></div>
+<div class="explain-block"><div class="explain-head">📖 مفردات</div><div class="explain-body"><strong>الوضيّة:</strong> المضيئة، الساطعة<br><strong>حرّة:</strong> طليقة، غير مقيدة</div></div>
+<div class="explain-block"><div class="explain-head">🎯 أسئلة</div><div class="explain-body">١. ما الأسلوب في البيت الأول؟<br>٢. ما التشبيه في البيت الأخير؟<br>٣. احفظ هذا النشيد!</div></div>`},
+
+{title:'🌙 شعر: الطبيعة اللبنانية', html:`
+<div class="rule-box"><div class="rule-title">شعر الطبيعة</div><div class="rule-text" style="font-size:24px;line-height:2.2">يا جبالَ لبنانَ السامية<br>أنتِ للعرب حِصنٌ وهامة<br>في ثلوجِكِ برودةٌ ساحرة<br>وفي صيفِكِ لطفٌ وكرامة</div></div>
+<div class="explain-block"><div class="explain-head">📖 شرح</div><div class="explain-body"><strong>السامية:</strong> الشامخة العالية<br><strong>الهامة:</strong> الرأس، القمة<br><strong>ساحرة:</strong> تسحر الأعين بجمالها</div></div>
+<div class="explain-block"><div class="explain-head">🎯 تحليل</div><div class="explain-body">١. ما نوع الأسلوب في "يا جبال"؟<br>٢. استخرج صفتين من القصيدة.<br>٣. اكتب بيتين عن مكان تحبه.</div></div>`},
+
+{title:'🌙 ختام: شعر الإنجاز', html:`
+<div class="rule-box"><div class="rule-title">قصيدة الختام</div><div class="rule-text" style="font-size:22px;line-height:2.2">أتممتُ رحلتي وأكملتُ المسير<br>وللعلم في قلبي طريقٌ طويل<br>ستون يومًا من الجدِّ والسعي<br>زرعتُ فيها نخلةً وأصيل</div></div>
+<div class="explain-block"><div class="explain-head">🎉 احتفالك</div><div class="explain-body">أنجزتَ رحلة ٦٠ يومًا في اللغة العربية!<br>كل يوم تعلّمت فيه شيئًا جديدًا.<br><br>اكتب قصيدتك الخاصة عن هذه الرحلة!</div></div>
+<input class="imla-input" placeholder="قصيدتي الخاصة..." style="min-height:110px;">`},
+]
+};
+
+// ============================================================
+// QUIZ QUESTIONS — 40 questions pool
+// ============================================================
+const QUESTIONS = [
+// Grammar
+{t:'grammar',q:'أيُّ الكلمات فِعلٌ ماضٍ؟',o:['يَكْتُبُ','كَتَبَ','كِتَابٌ','كَاتِبٌ'],a:1,e:'كَتَبَ فعل ماضٍ لأنه يدل على حدث وقع قبل زمن الكلام.'},
+{t:'grammar',q:'ما نوع الفعل "يَذْهَبُ"؟',o:['ماضٍ','مضارع','أمر','اسم'],a:1,e:'يَذهبُ فعل مضارع يبدأ بالياء من حروف (أنيت).'},
+{t:'grammar',q:'ما الفعل المضارع من "درَسَ"؟',o:['يَدْرُسُ','دِراسة','مدرسة','دارس'],a:0,e:'يَدرسُ هو المضارع من درَسَ، يبدأ بالياء.'},
+{t:'grammar',q:'أيُّ الأفعال فعل أمر؟',o:['كَتَبَ','يَكْتُبُ','اُكْتُبْ','كِتابة'],a:2,e:'اُكْتُبْ فعل أمر مبني على السكون.'},
+{t:'grammar',q:'في "كَتَبَ الطالبُ الدرسَ" — إعراب "الطالبُ"',o:['مبتدأ','فاعل','مفعول','خبر'],a:1,e:'الطالبُ فاعل مرفوع لأنه من قام بالفعل كتب.'},
+{t:'grammar',q:'ما إعراب "الدرسَ" في الجملة السابقة؟',o:['فاعل','مبتدأ','مفعول به','خبر'],a:2,e:'الدرسَ مفعول به منصوب وعلامة نصبه الفتحة.'},
+{t:'grammar',q:'في "العلمُ نورٌ" — نوع الجملة:',o:['فعلية','اسمية','شرطية','استفهامية'],a:1,e:'الجملة اسمية مكوّنة من مبتدأ (العلمُ) وخبر (نورٌ).'},
+{t:'grammar',q:'ما المبتدأ في "الطالبةُ مجتهدةٌ"؟',o:['مجتهدة','الطالبةُ','كلاهما','لا مبتدأ'],a:1,e:'الطالبةُ هي المبتدأ المرفوع الذي يُبدأ به الكلام.'},
+{t:'grammar',q:'أيُّ الكلمات اسمٌ؟',o:['كَتَبَ','يَذهبُ','الكتابُ','اِجلسْ'],a:2,e:'الكتابُ اسم لأنه يقبل أل التعريف والتنوين.'},
+{t:'grammar',q:'"من" حرف جر — ما الاسم المجرور بعده في: "جاء من المدرسةِ"؟',o:['جاء','من','المدرسةِ','لا يوجد'],a:2,e:'المدرسةِ اسم مجرور بـ"من" وعلامة جره الكسرة.'},
+{t:'grammar',q:'ما جمع كلمة "طالب"؟',o:['طالبة','طلاب','طالبتان','طوالب'],a:1,e:'طلاب جمع كسر من طالب.'},
+{t:'grammar',q:'النعت يتبع منعوته في:',o:['الإعراب فقط','التعريف فقط','الإعراب والتعريف والجنس والعدد','المعنى فقط'],a:2,e:'النعت يتبع منعوته في أربعة أمور: الإعراب، التعريف، الجنس، العدد.'},
+{t:'grammar',q:'ما مؤنث كلمة "مدير"؟',o:['مديرات','مديرة','مديرتان','كل ما سبق'],a:1,e:'مديرة هي مؤنث مدير بإضافة التاء المربوطة.'},
+{t:'grammar',q:'في "الطالبُ المجتهدُ نجحَ" — كلمة "المجتهدُ" هي:',o:['مبتدأ','خبر','نعت','فاعل'],a:2,e:'المجتهدُ نعت للطالب يتبعه في الإعراب والتعريف.'},
+// Reading
+{t:'reading',q:'ما معنى كلمة "مُجتهد"؟',o:['كسول','يبذل جهدًا','مريض','سريع'],a:1,e:'مجتهد من الاجتهاد وهو بذل الجهد الكامل.'},
+{t:'reading',q:'ما مضاد كلمة "يستيقظ"؟',o:['ينام','يأكل','يلعب','يذهب'],a:0,e:'مضاد يستيقظ هو ينام.'},
+{t:'reading',q:'ما جمع كلمة "ثمرة"؟',o:['ثمار','ثمرات','ثمور','أ وب معًا'],a:3,e:'ثمرة تجمع على ثمار (جمع تكسير) وثمرات (جمع مؤنث سالم).'},
+{t:'reading',q:'ما الفكرة الرئيسية في نص "الطالب المجتهد"؟',o:['النوم مهم','الاجتهاد والصداقة طريق النجاح','المرض يوقف الدراسة','اللعب ضروري'],a:1,e:'النص يتحدث عن أهمية الاجتهاد والصداقة الحقيقية.'},
+{t:'reading',q:'ما نوع الأسلوب في "كأن الليل بحر من الظلام"؟',o:['استفهام','تشبيه','أمر','نهي'],a:1,e:'هذا تشبيه بأداة "كأن" — شُبّه الليل بالبحر.'},
+{t:'reading',q:'ما المقصود بـ"ثمرة الجد والاجتهاد"؟',o:['فاكهة اللقيم','نتيجة العمل الجاد','نوع من الأشجار','شيء مادي'],a:1,e:'الثمرة هنا مجاز يُقصد به النتيجة والعائد من العمل الجاد.'},
+{t:'reading',q:'ما نوع التشبيه في "العلم كالنور"؟',o:['بليغ','مرسل مجمل','مرسل مفصّل','ضمني'],a:1,e:'مرسل مجمل: ذُكرت الأداة (كـ) ولم يُذكر وجه الشبه.'},
+{t:'reading',q:'ما معنى "يُنشد" في النص؟',o:['يضحك','يُغنّي ويُردد','ينام','يطير'],a:1,e:'ينشد تعني يُغنّي أو يُنشد أغنية أو نشيدًا.'},
+{t:'reading',q:'ما جمع كلمة "وادٍ"؟',o:['وديان','أودية','وادٍات','أ وب معًا'],a:3,e:'وادٍ يجمع على وديان وأودية.'},
+// Spelling
+{t:'spelling',q:'أيُّ الكلمات مكتوبة بشكل صحيح؟',o:['مدرسه','مدرسة','مدرست','مدرسا'],a:1,e:'مدرسة بالتاء المربوطة لأنها اسم مؤنث.'},
+{t:'spelling',q:'همزة في "أَكَلَ" من نوع:',o:['وصل','قطع','متوسطة','متطرفة'],a:1,e:'همزة القطع في أَكَلَ تثبت دائمًا ولا تحذف في الوصل.'},
+{t:'spelling',q:'همزة في "اِذهبْ" من نوع:',o:['قطع','وصل','متوسطة','متطرفة'],a:1,e:'همزة وصل تحذف عند الوصل: "ذَهَبتُ إلى اِذهب" ← تحذف.'},
+{t:'spelling',q:'ما الكتابة الصحيحة لمؤنث "طالب"؟',o:['طالبه','طالبت','طالبة','طلابة'],a:2,e:'طالبة بالتاء المربوطة لأنها اسم مؤنث مفرد.'},
+{t:'spelling',q:'الألف في "رمى" هي:',o:['ممدودة','مقصورة','همزة مد','لا يوجد فرق'],a:1,e:'الألف في رمى مقصورة (ى) لأنه فعل ثلاثي معتل الآخر.'},
+{t:'spelling',q:'أيُّ الكلمات فيها همزة متوسطة؟',o:['أكل','اذهب','سُئِلَ','قرأ'],a:2,e:'سُئِلَ — الهمزة في وسط الكلمة على الياء.'},
+{t:'spelling',q:'ما الكتابة الصحيحة: "يسعى" أم "يسعا"؟',o:['يسعا','يسعى','يسعَ','يسعيَ'],a:1,e:'يسعى بالألف المقصورة (ى) لأنه فعل ثلاثي معتل الآخر.'},
+{t:'spelling',q:'أيُّ الكلمتين فيها تاء مربوطة خاطئة؟',o:['مدينة','مدينه','مدينت','أ وب'],a:3,e:'مدينه (بالهاء) خاطئة — الصحيح مدينة بالتاء المربوطة.'},
+// Expression
+{t:'expression',q:'ما الفرق بين التعبير الوصفي والسردي؟',o:['لا فرق','الوصف يصور والسرد يحكي أحداثًا','الوصف للأشخاص فقط','السرد للأماكن فقط'],a:1,e:'التعبير الوصفي يرسم صورة بالكلمات، والسردي يحكي أحداثًا بترتيب زمني.'},
+{t:'expression',q:'ما الجزء الأول من الفقرة التعبيرية؟',o:['الخاتمة','العرض','المقدمة','التفصيل'],a:2,e:'الفقرة التعبيرية: مقدمة + عرض + خاتمة. المقدمة أولًا.'},
+{t:'expression',q:'ما رابط الترتيب الزمني في السرد؟',o:['لأن','بعد ذلك','على الرغم من','في رأيي'],a:1,e:'"بعد ذلك" و"ثم" و"أولًا" روابط زمنية تُستخدم في السرد.'},
+{t:'expression',q:'في التعبير عن الرأي، ماذا نكتب بعد "أرى أن"؟',o:['استفهامًا','دليلًا أو سببًا','وصفًا','قصة'],a:1,e:'بعد "أرى أن" نذكر الرأي ثم ندعمه بـ"لأن" + دليل.'},
+{t:'expression',q:'ما عنصر التلخيص الجيد؟',o:['إعادة الكلمات نفسها','الأسلوب الخاص مع الأفكار الرئيسية','حذف كل شيء','إضافة أفكار جديدة'],a:1,e:'التلخيص الجيد: نأخذ الأفكار الرئيسية ونُعيد صياغتها بأسلوبنا.'},
+{t:'expression',q:'ما أداة التشبيه في "القلم كالسيف"؟',o:['القلم','السيف','كـ','لا يوجد'],a:2,e:'أداة التشبيه هي "كـ" — القلم هو المشبَّه والسيف هو المشبَّه به.'},
+];
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  if (id === 'calendarScreen') buildCalendar();
+  if (id === 'homeScreen') updateHome();
+}
+
+function showDay() {
+  const d = S.currentDay;
+  const info = CURRICULUM[d - 1] || CURRICULUM[59];
+  document.getElementById('dayTopTitle').textContent = `اليوم ${n(d)}`;
+  document.getElementById('dayBadge').textContent = `أسبوع ${n(info.w)}`;
+  document.getElementById('dayNumBig').textContent = `اليوم ${n(d)}`;
+  document.getElementById('dayTopic').textContent = info.topic;
+  document.getElementById('dayDesc').textContent = info.desc;
+  // restore completed modules
+  ['qawaid','qiraah','imla','taabir'].forEach(m => {
+    const card = document.getElementById(`mod-${m}`);
+    const key = `${d}_${m}`;
+    if (card) card.classList.toggle('completed', !!S.completedModules[key]);
+  });
+  showScreen('dayScreen');
+}
+
+// خريطة صريحة: كل يوم → فهرس درس مختلف
+// 9 دروس موزّعة على 60 يوم: كل درس يظهر ~6-7 أيام
+// نضمن أن الأيام المتتالية (1,2,3...) لها دروس مختلفة
+const DAY_LESSON_MAP = (() => {
+  const map = {};
+  // كل يوم يأخذ فهرسًا مختلفًا: (d-1) % عدد_الدروس
+  // هذا يضمن أن كل يوم له محتوى مختلف عن اليوم الذي قبله
+  for (let d = 1; d <= 60; d++) {
+    map[d] = {
+      qawaid:   (d - 1) % 9,
+      qiraah:   (d - 1) % 9,
+      imla:     (d - 1) % 9,
+      taabir:   (d - 1) % 9,
+      mahfuzat: (d - 1) % 8
+    };
+  }
+  return map;
+})();
+
+function startLesson(type) {
+  S.lessonType = type;
+  const lessons = LESSON_DATA[type];
+  const idx = DAY_LESSON_MAP[S.currentDay]?.[type] ?? (S.currentDay - 1) % lessons.length;
+  const lesson = lessons[idx];
+  document.getElementById('lessonTitle').textContent = lesson.title;
+  document.getElementById('lessonBadge').textContent = `اليوم ${n(S.currentDay)}`;
+  document.getElementById('lessonContent').innerHTML = lesson.html;
+  showScreen('lessonScreen');
+}
+
+function lessonDone() {
+  const fromDetail = document.getElementById('lessonTitle').dataset.from === 'detail';
+  const targetDay = fromDetail ? browsingDay : S.currentDay;
+  const key = `${targetDay}_${S.lessonType}`;
+  S.completedModules[key] = true;
+  S.stars += 5;
+  saveState();
+  // update card in dayScreen
+  const card = document.getElementById(`mod-${S.lessonType}`);
+  if (card) card.classList.add('completed');
+  // update card in dayDetailScreen
+  const ddCard = document.getElementById(`dd-mod-${S.lessonType}`);
+  if (ddCard) ddCard.classList.add('completed');
+  fireStars();
+  document.getElementById('lessonTitle').dataset.from = '';
+  if (fromDetail) {
+    openDayDetail(targetDay);
+  } else {
+    showScreen('dayScreen');
+    checkAllModulesDone();
+  }
+}
+
+function checkAllModulesDone() {
+  const d = S.currentDay;
+  const allDone = ['qawaid','qiraah','imla','taabir'].every(m => S.completedModules[`${d}_${m}`]);
+  if (allDone && !S.completedDays.includes(d)) {
+    // Don't auto-mark day done until quiz is passed
+  }
+}
+
+// اختيار أسئلة مختلفة لكل يوم باستخدام seed ثابت بناءً على رقم اليوم
+function getDayQuestions(dayNum) {
+  const total = QUESTIONS.length;
+  const perDay = 10;
+  // نرتب الأسئلة بترتيب ثابت مبني على رقم اليوم (seeded rotation)
+  const start = ((dayNum - 1) * perDay) % total;
+  const result = [];
+  for (let i = 0; i < perDay; i++) {
+    result.push(QUESTIONS[(start + i) % total]);
+  }
+  return result;
+}
+
+function startDailyQuiz() {
+  const qs = getDayQuestions(S.currentDay);
+  S.quizQuestions = qs;
+  S.currentQ = 0;
+  S.quizAnswers = [];
+  S.quizStartTime = Date.now();
+  document.getElementById('quizBadge').textContent = `اليوم ${n(S.currentDay)}`;
+  showScreen('quizScreen');
+  renderQ();
+}
+
+function renderQ() {
+  const q = S.quizQuestions[S.currentQ];
+  const total = S.quizQuestions.length;
+  document.getElementById('quizProgressFill').style.width = ((S.currentQ / total) * 100) + '%';
+  document.getElementById('quizQNum').textContent = `السؤال ${n(S.currentQ+1)} من ${n(total)}`;
+  const typeMap = {grammar:'قواعد',reading:'قراءة',spelling:'إملاء',expression:'تعبير'};
+  const optsHTML = q.o.map((o,i) => `
+    <div class="quiz-option" onclick="selectAnswer(${i})" id="opt-${i}">
+      <span>${o}</span>
+      <span class="option-letter">${['أ','ب','ج','د'][i]}</span>
+    </div>`).join('');
+  document.getElementById('quizBody').innerHTML = `
+    <div class="quiz-type-badge ${q.t}">${typeMap[q.t]||q.t}</div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="quiz-options">${optsHTML}</div>
+    <div class="feedback-banner" id="quizFeedback"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQ()">التالي ▶</button>`;
+}
+
+function selectAnswer(idx) {
+  const q = S.quizQuestions[S.currentQ];
+  document.querySelectorAll('.quiz-option').forEach(o => o.style.pointerEvents = 'none');
+  const correct = idx === q.a;
+  S.quizAnswers.push(correct);
+  document.getElementById(`opt-${idx}`).classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) {
+    document.getElementById(`opt-${q.a}`).classList.add('reveal');
+  }
+  const fb = document.getElementById('quizFeedback');
+  if (correct) {
+    fb.className = 'feedback-banner correct';
+    fb.innerHTML = `<div class="feedback-title">✅ إجابة صحيحة!</div>${q.e}`;
+    fireStars();
+    S.stars += 10;
+  } else {
+    fb.className = 'feedback-banner wrong';
+    fb.innerHTML = `<div class="feedback-title">❌ إجابة خاطئة</div>${q.e}`;
+  }
+  const btn = document.getElementById('btnNext');
+  btn.classList.add('show');
+  btn.textContent = S.currentQ + 1 < S.quizQuestions.length ? 'التالي ▶' : '🏁 النتائج';
+}
+
+function nextQ() {
+  S.currentQ++;
+  if (S.currentQ >= S.quizQuestions.length) showResult();
+  else renderQ();
+}
+
+function showResult() {
+  const correct = S.quizAnswers.filter(Boolean).length;
+  const total = S.quizAnswers.length;
+  const pct = Math.round(correct / total * 100);
+  const elapsed = Math.round((Date.now() - S.quizStartTime) / 1000);
+  const mins = Math.floor(elapsed / 60);
+  const secs = elapsed % 60;
+
+  const circle = document.getElementById('resultCircle');
+  circle.className = 'result-circle ' + (pct>=80?'excellent':pct>=60?'good':'needs-work');
+  document.getElementById('resultEmoji').textContent = pct>=80?'🏆':pct>=60?'👍':'💪';
+  document.getElementById('resultTitle').textContent = pct>=80?'ممتاز!':pct>=60?'جيد جدًا!':'استمر في التدريب!';
+  document.getElementById('resultMsg').textContent = pct>=80?'أداء رائع! أنت نجم اللغة العربية.':pct>=60?'أداء جيد، استمر!':'راجع الدروس وحاول مجددًا.';
+  document.getElementById('resultScore').textContent = `${correct}/${total}`;
+  document.getElementById('resultPct').textContent = `${n(pct)}٪`;
+
+  const gram = S.quizAnswers.filter((a,i)=>a&&S.quizQuestions[i]?.t==='grammar').length;
+  const tGram = S.quizQuestions.filter(q=>q.t==='grammar').length;
+  const read = S.quizAnswers.filter((a,i)=>a&&S.quizQuestions[i]?.t==='reading').length;
+  const tRead = S.quizQuestions.filter(q=>q.t==='reading').length;
+  const spell = S.quizAnswers.filter((a,i)=>a&&S.quizQuestions[i]?.t==='spelling').length;
+  const tSpell = S.quizQuestions.filter(q=>q.t==='spelling').length;
+  document.getElementById('brGrammar').textContent = `${gram}/${tGram}`;
+  document.getElementById('brReading').textContent = `${read}/${tRead}`;
+  document.getElementById('brSpelling').textContent = `${spell}/${tSpell}`;
+  document.getElementById('brTime').textContent = `${n(mins)}:${secs.toString().padStart(2,'0')}`;
+
+  // Mark day complete if score >= 60%
+  S.lastScore = pct;
+  const dayDone = pct >= 60;
+  if (dayDone && !S.completedDays.includes(S.currentDay)) {
+    S.completedDays.push(S.currentDay);
+    S.streak++;
+    S.stars += 20;
+    saveState();
+    if (pct >= 80) fireStars();
+  }
+  saveState();
+
+  // Show next day option if day complete and not last day
+  const nextDaySection = document.getElementById('nextDaySection');
+  const fromDetail = S._quizFromDetail;
+  const quizDay = S._quizDay || S.currentDay;
+  if (!fromDetail && dayDone && S.currentDay < 60) {
+    nextDaySection.style.display = 'block';
+    document.getElementById('ndbMsg').textContent = `أحسنت! نتيجتك ${n(pct)}٪ — يمكنك الانتقال لليوم التالي الآن.`;
+    document.getElementById('nextDayNum').textContent = n(S.currentDay + 1);
+  } else {
+    nextDaySection.style.display = 'none';
+  }
+  S._quizFromDetail = false;
+  S._quizDay = null;
+
+  showScreen('resultScreen');
+}
+
+function showDayComplete() {
+  const nextDay = S.currentDay + 1;
+  const info = CURRICULUM[nextDay - 1] || CURRICULUM[59];
+  document.getElementById('dcoTitle').textContent = `🎉 اليوم ${n(S.currentDay)} مكتمل!`;
+  document.getElementById('dcoMsg').textContent = `رائع جدًا! اليوم التالي: "${info?.topic || 'مراجعة شاملة'}"`;
+  document.getElementById('dcoStars').textContent = `+٢٠ نجمة ⭐  المجموع: ${n(S.stars)}`;
+  document.getElementById('dayCompleteOverlay').classList.add('show');
+}
+
+function advanceToNextDay() {
+  document.getElementById('dayCompleteOverlay').classList.remove('show');
+  if (S.currentDay < 60) {
+    S.currentDay++;
+    saveState();
+    showDay();
+  } else {
+    showScreen('homeScreen');
+  }
+}
+
+function closeDayComplete() {
+  document.getElementById('dayCompleteOverlay').classList.remove('show');
+  showScreen('homeScreen');
+}
+
+// ============================================================
+// CALENDAR — قائمة الأيام الكاملة
+// ============================================================
+let calFilter = 'all';
+let browsingDay = 1; // اليوم الذي يستعرضه المستخدم (للقراءة فقط)
+
+function buildCalendar() {
+  renderCalList();
+}
+
+function filterCal(f) {
+  calFilter = f;
+  ['all','done','current','future'].forEach(x => {
+    document.getElementById('f' + x.charAt(0).toUpperCase() + x.slice(1))?.classList.remove('active');
+  });
+  document.getElementById('f' + f.charAt(0).toUpperCase() + f.slice(1)).classList.add('active');
+  renderCalList();
+}
+
+function renderCalList() {
+  const container = document.getElementById('calendarContent');
+  let html = '';
+
+  // Month 1
+  const m1Days = Array.from({length:30},(_,i)=>i+1);
+  const m2Days = Array.from({length:30},(_,i)=>i+31);
+
+  html += renderMonth('📅 الشهر الأول', m1Days);
+  html += renderMonth('📅 الشهر الثاني', m2Days);
+  container.innerHTML = html || '<div style="text-align:center;padding:40px;color:rgba(255,255,255,.3);">لا توجد أيام في هذه الفئة</div>';
+}
+
+function renderMonth(title, days) {
+  let filtered = days.filter(d => {
+    if (calFilter === 'done') return S.completedDays.includes(d);
+    if (calFilter === 'current') return d === S.currentDay;
+    if (calFilter === 'future') return d > S.currentDay;
+    return true;
+  });
+  if (!filtered.length) return '';
+
+  let html = `<div class="month-header">${title}</div>`;
+  filtered.forEach(d => {
+    const info = CURRICULUM[d-1];
+    const isDone = S.completedDays.includes(d);
+    const isCurrent = d === S.currentDay;
+    const isFuture = d > S.currentDay;
+    const cardCls = isDone ? 'done' : isCurrent ? 'current-day' : isFuture ? 'future-day' : '';
+    const numCls = isDone ? 'done' : isCurrent ? 'current' : 'future';
+    const statusIcon = isDone ? '✅' : isCurrent ? '📍' : isFuture ? '🔒' : '📋';
+    const weekLabel = `أسبوع ${n(info.w)}`;
+    html += `
+      <div class="day-list-card ${cardCls}" onclick="openDayDetail(${d})">
+        <div class="dlc-num ${numCls}">${n(d)}</div>
+        <div class="dlc-info">
+          <div class="dlc-topic">${info.topic}</div>
+          <div class="dlc-sub">
+            <span>${weekLabel}</span>
+            <span>•</span>
+            <span>${isDone ? 'مكتمل' : isCurrent ? 'اليوم الحالي' : isFuture ? 'قادم' : 'لم يكتمل'}</span>
+          </div>
+        </div>
+        <div class="dlc-status">${statusIcon}</div>
+      </div>`;
+  });
+  return html;
+}
+
+function openDayDetail(d) {
+  browsingDay = d;
+  const info = CURRICULUM[d-1];
+  document.getElementById('ddTitle').textContent = `اليوم ${n(d)}`;
+  document.getElementById('ddBadge').textContent = `أسبوع ${n(info.w)}`;
+  document.getElementById('ddNumBig').textContent = `اليوم ${n(d)}`;
+  document.getElementById('ddTopic').textContent = info.topic;
+  document.getElementById('ddDesc').textContent = info.desc;
+  // show completed modules
+  ['qawaid','qiraah','imla','taabir'].forEach(m => {
+    const card = document.getElementById(`dd-mod-${m}`);
+    if (card) card.classList.toggle('completed', !!S.completedModules[`${d}_${m}`]);
+  });
+  showScreen('dayDetailScreen');
+}
+
+function openDayLesson(type) {
+  const d = browsingDay;
+  S.lessonType = type;
+  const lessons = LESSON_DATA[type];
+  const idx = DAY_LESSON_MAP[d]?.[type] ?? (d-1) % lessons.length;
+  const lesson = lessons[idx];
+  document.getElementById('lessonTitle').textContent = lesson.title;
+  document.getElementById('lessonBadge').textContent = `اليوم ${n(d)}`;
+  document.getElementById('lessonContent').innerHTML = lesson.html;
+  // After lesson done, go back to day detail
+  document.getElementById('lessonTitle').dataset.from = 'detail';
+  showScreen('lessonScreen');
+}
+
+function openDayQuiz() {
+  const d = browsingDay;
+  const qs = getDayQuestions(d);
+  S.quizQuestions = qs;
+  S.currentQ = 0;
+  S.quizAnswers = [];
+  S.quizStartTime = Date.now();
+  S._quizFromDetail = true;
+  S._quizDay = d;
+  document.getElementById('quizBadge').textContent = `اليوم ${n(d)}`;
+  showScreen('quizScreen');
+  renderQ();
+}
+
+function jumpToDay(d) {
+  openDayDetail(d);
+}
+
+// ============================================================
+// IMLA CHECK
+// ============================================================
+function checkImla(input, correct) {
+  const fb = document.getElementById('fb-' + input.id);
+  if (!fb) return;
+  const val = input.value.trim();
+  if (!val) { fb.className='feedback-banner'; return; }
+  if (val === correct) {
+    fb.className = 'feedback-banner correct';
+    fb.innerHTML = '<div class="feedback-title">✅ صحيح!</div>';
+    fireStars();
+  } else {
+    fb.className = 'feedback-banner wrong';
+    fb.innerHTML = `<div class="feedback-title">❌</div>الإجابة: <strong>${correct}</strong>`;
+  }
+}
+
+// ============================================================
+// TTS
+// ============================================================
+function speakText(btn) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const box = btn.closest('.passage-box');
+    const text = box ? box.querySelector('p').innerText : '';
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'ar-SA';
+    utt.rate = 0.85;
+    window.speechSynthesis.speak(utt);
+  }
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function n(num) {
+  return String(num).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+function shuffle(arr) {
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function fireStars() {
+  const c = document.getElementById('stars');
+  c.style.display = 'block';
+  const emojis = ['⭐','🌟','✨','💫','🏅'];
+  for(let i=0;i<8;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left = Math.random()*100+'%';
+    s.style.top = (40+Math.random()*40)+'%';
+    s.style.animationDelay = (Math.random()*0.4)+'s';
+    c.appendChild(s);
+  }
+  setTimeout(()=>{ c.innerHTML=''; c.style.display='none'; }, 2000);
+}
+
+function updateHome() {
+  const d = S.currentDay;
+  const pct = d / 60;
+  const circ = 427;
+  document.getElementById('progressRing').style.strokeDashoffset = circ - pct * circ;
+  document.getElementById('homeDay').textContent = n(d);
+  document.getElementById('homeTotal').textContent = `من ${n(60)} يومًا`;
+  document.getElementById('statStreak').textContent = n(S.streak);
+  document.getElementById('statStars').textContent = n(S.stars);
+  document.getElementById('statScore').textContent = S.lastScore !== null ? n(S.lastScore)+'٪' : '-';
+}
+
+function resetProgress() {
+  if (confirm('هل تريد حذف كل التقدم والبدء من اليوم الأول؟')) {
+    localStorage.removeItem(SAVE_KEY);
+    S.currentDay=1; S.completedDays=[]; S.completedModules={}; S.stars=0; S.streak=0; S.lastScore=null;
+    updateHome();
+  }
+}
+
+
+// ============================================================
+// PASSWORD
+// ============================================================
+const CORRECT_PWD = 'حسن-ناصر';
+
+function checkPwd() {
+  const input = document.getElementById('pwdInput').value.trim();
+  const errEl = document.getElementById('pwdError');
+  if (input === CORRECT_PWD) {
+    errEl.textContent = '';
+    document.getElementById('pwdScreen').classList.remove('active');
+    document.getElementById('homeScreen').classList.add('active');
+    loadState();
+    updateHome();
+  } else {
+    errEl.textContent = '❌ كلمة المرور غير صحيحة، حاول مجدداً';
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdInput').focus();
+    // shake animation
+    const box = document.querySelector('.pwd-box');
+    box.style.animation = 'none';
+    box.style.transform = 'translateX(-8px)';
+    setTimeout(() => { box.style.transform = 'translateX(8px)'; }, 80);
+    setTimeout(() => { box.style.transform = 'translateX(-5px)'; }, 160);
+    setTimeout(() => { box.style.transform = 'translateX(0)'; }, 240);
+  }
+}
+
+// ============================================================
+// INIT — wait for password
+// ============================================================
+// loadState and updateHome called after password check
+</script>
+</body>
+</html>
